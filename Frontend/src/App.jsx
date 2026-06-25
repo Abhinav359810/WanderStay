@@ -6,11 +6,12 @@ import Index from "./pages/Index";
 import Show from "./pages/show";
 import NewForm from "./pages/NewForm";
 import Editform from "./pages/Editform";
+import Navbar from "./components/Navbar";
 
 function App() {
     return(
       <>
-      <h2>This is navbar</h2>
+      <Navbar/>
 
       {/* creating Routes container */}
       <Routes>
