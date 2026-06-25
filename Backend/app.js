@@ -1,0 +1,112 @@
+    //server : The entry point that starts your Express server
+    const express = require("express");
+    const app = express();
+    const mongoose = require("mongoose");
+    const Listing = require("./Models/listing.js");
+    const cors = require("cors");
+
+
+    const MONGO_URL = "mongodb://127.0.0.1:27017/WanderStay";
+
+    //middlewares
+    app.use(cors());
+    // app.use(express.urlencoded({extended:true})); for ejs
+    app.use(express.json())
+
+
+    //root route
+    app.get("/",(req,res)=>{
+        res.send("You contacted root");
+    });
+
+    //index route 
+    app.get("/listings",async (req,res)=>{
+        const allListings = await Listing.find({});
+        res.json(allListings);
+    });
+
+    //show route
+    app.get("/listings/:id",async (req,res)=>{
+        let {id} = req.params;
+        const listing = await Listing.findById(id);
+        res.json(listing);
+    });
+
+    //create route
+    app.post('/listings',async (req,res)=>{
+        const listing = new Listing(req.body);
+        await listing.save();
+        res.json({
+            message:"created"
+        });
+        // we have to send back some response then only axios will get response and then method execute and then only
+        // use navigate will work 
+    });
+
+    // //Edit route
+    // app.get('/listings/:id/edit',async (req,res)=>{
+    //     let {id} = req.params;
+    //     const listing = await Listing.findById(id);
+    //     res.json(listing);
+    // });
+
+    //update route
+    app.put('/listings/:id',async (req,res)=>{
+        let {id} = req.params;
+        await Listing.findByIdAndUpdate(id,req.body);
+        res.json({
+            message:"Updated"
+        });
+    })
+
+    //Delete Route
+    app.delete("/listings/:id", async (req,res) =>{
+        let {id} = req.params;
+        await Listing.findByIdAndDelete(id);
+        res.json({
+            message : "deleted"
+        });
+    });
+
+    // //testreact
+    // app.get("/react",(req,res)=>{
+    //     res.json({
+    //         title : "Villa"
+    //     });
+    // });
+
+    // //testroot
+    // app.get("/listing", async (req,res)=>{
+    //    let SampleListing = new Listing({
+    //     title : "Boom Beach",
+    //     description : "testing ",
+    //     price : 1200,
+    //     location : "chicago",
+    //     country : "USA",
+    //    });
+
+    //    await SampleListing.save();
+    //    console.log("sample was saved");
+    //    res.send("saved to DB");
+    // });
+
+    //checking if connected to db
+    main().then(()=>{
+        console.log("Succesfully Conneced to Database ");
+    }).catch((err)=>{
+        console.log(err);
+    });
+
+    //connecting to database
+    async function main(){
+        await mongoose.connect(MONGO_URL);
+    }
+
+    // server is listening
+    app.listen(8080,()=>{
+        console.log("Server is running on 8080 Port");
+    });
+
+
+
+

@@ -1,0 +1,11 @@
+Project Phase 1 a :
+
+Basic set Up ;
+Model create ;
+Initialise database;
+install cors in backend 
+installed axios in frontend 
+index route
+read (show) route
+installed react router dom in frontend 
+Create route
