@@ -1,0 +1,13 @@
+/* Styling Navbar Component  */
+.navbar {
+  height: 5rem;
+  background-color: white;
+}
+
+.fa-house {
+    color : #fe424d;
+}
+
+.nav-link {
+  color : #222222;
+}

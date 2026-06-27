@@ -7,6 +7,7 @@ import Show from "./pages/show";
 import NewForm from "./pages/NewForm";
 import Editform from "./pages/Editform";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
     return(
@@ -21,7 +22,7 @@ function App() {
         <Route path = '/listings/:id/edit' element={<Editform/>}/>
       </Routes>
 
-      <h2>This is footer</h2>
+      <Footer/>
       </>
     );
 };

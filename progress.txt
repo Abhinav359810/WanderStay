@@ -9,3 +9,18 @@ index route
 read (show) route
 installed react router dom in frontend 
 Create route
+Edit and Update route
+Delete route
+
+Project Phase 1 b : 
+using bootstrap linked with cdn in index.html
+cleared index.css and styling with index.css globally
+removed create new listing from index.jsx
+added logo and attached cdn of font awesome 
+done navbar 
+done footer
+created card component and render in index.jsx
+created card css also put anchor tag in index.jsx for cards 
+
+
+
