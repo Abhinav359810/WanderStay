@@ -27,27 +27,54 @@ export default function NewForm(){
         axios.post("http://localhost:8080/listings",listing)
         .then(()=>{
             navigate('/listings');
+        }).catch((err)=>{
+            console.log(err);
         });
     }
 
     return(
         <>
+        <div className="row mt-3">
+            <div className="col-8 offset-2">
         <h3> Create new Listing </h3>
         <form onSubmit={handlesubmit}>
-            <input name="title" placeholder="Enter Title" value={listing.title}onChange={handlechange}  type="text"/> 
-            <br/><br/>
-            <textarea name="description" placeholder="Enter description" value={listing.description}onChange={handlechange}> </textarea>
-            <br/><br/>
-            <input name="image" placeholder="Enter image url"value={listing.image}onChange={handlechange} type="text"/>
-            <br/><br/>
-            <input name="price" placeholder="Enter price "value={listing.price}onChange={handlechange} type="number"/>
-            <br/><br/>
-            <input name="country" placeholder="Enter country " value={listing.country}onChange={handlechange} type="text"/>
-            <br/><br/>
-            <input name="location" placeholder="Enter location " value={listing.location} onChange={handlechange} type="text"/>
-            <br/><br/>
-            <button>Add</button>
+
+            <div className="mb-3">
+            <label htmlFor="title" className="form-label">Title</label>
+            <input id="title" name="title" placeholder="Add a catchy title" className="form-control"value={listing.title}onChange={handlechange} type="text"/> 
+            </div>
+
+            <div className="mb-3">
+            <label htmlFor="description" className="form-label">Description</label>
+             <textarea id="description"name="description" className="form-control" value={listing.description}onChange={handlechange}/> 
+            </div>
+
+             <div className="mb-3">
+            <label htmlFor="image" className="form-label">Image Link</label>
+             <input id="image"name="image" className="form-control" placeholder="Enter image Url" value={listing.image}onChange={handlechange} type="text"/>
+            </div>
+
+            <div className="row">
+            <div className="mb-3 col-md-4">
+            <label htmlFor="price" className="form-label">Price</label>
+            <input id="price"name="price" className="form-control"placeholder="1500"value={listing.price}onChange={handlechange} type="number"/>
+            </div>
+
+            <div className="mb-3 col-md-8">
+            <label htmlFor="country" className="form-label">Country</label>
+             <input id="country" name="country" className="form-control" placeholder="India" value={listing.country}onChange={handlechange} type="text"/>
+            </div>
+           </div>
+
+            <div className="mb-3">
+            <label htmlFor="location" className="form-label">Location</label>
+            <input id="location" name="location" className="form-control" placeholder="Kolkata,Mumbai" value={listing.location} onChange={handlechange} type="text"/>
+            </div>
+            
+            <button className="btn btn-dark mb-2 add-btn">Add</button>
         </form>
+        </div>
+    </div>
         </>
     );
 };

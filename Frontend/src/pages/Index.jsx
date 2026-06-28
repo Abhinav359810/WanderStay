@@ -20,9 +20,9 @@ export default function Index(){
     return(
         <>
         {/* home page */}
-        <h3 className="mt-3 px-4">All Listings</h3>
+        <h3 className="my-2">All Listings</h3>
         {/* We have created a container div which will store all the cards and this container will control the rows and cols  */}
-         <div className="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 p-4">
+         <div className="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
         {
             list.map((item)=>{
             return(

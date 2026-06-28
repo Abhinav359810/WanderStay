@@ -15,12 +15,14 @@ function App() {
       <Navbar/>
 
       {/* creating Routes container */}
+      <div className="container">
       <Routes>
         <Route path = '/listings' element={<Index/>}/>
         <Route path = '/listings/new' element = {<NewForm/>}/>
         <Route path = '/listings/:id' element={<Show/>}/>
         <Route path = '/listings/:id/edit' element={<Editform/>}/>
       </Routes>
+      </div>
 
       <Footer/>
       </>

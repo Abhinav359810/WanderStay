@@ -21,6 +21,8 @@ done navbar
 done footer
 created card component and render in index.jsx
 created card css also put anchor tag in index.jsx for cards 
+done index.jsx
+done new form styled 
 
 
 
