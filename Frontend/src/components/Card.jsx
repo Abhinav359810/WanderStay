@@ -5,6 +5,7 @@ export default function Card({image,title,price}){
         <>
         <div className="card col">
         <img src={image} className="card-img-top" alt="listing image"/>
+        <div className="card-img-overlay"></div>
         <div className="card-body">
         <p className="card-text">
             <b>{title}</b> <br/>
