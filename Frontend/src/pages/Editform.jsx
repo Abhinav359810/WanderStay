@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import useBootstrapValidation from "../hooks/useBootstrapValidation";
 
 export default function Editform(){
 
@@ -39,44 +40,52 @@ export default function Editform(){
             return {...prevlist, [event.target.name] : event.target.value}
         });
     }
+    //hooks
+    useBootstrapValidation();
     
     return(
         <>
         <div className="row mt-3">
             <div className="col-8 offset-2">
         <h3>Edit your Listing </h3>
-        <form onSubmit={handlesubmit}>
+        <form onSubmit={handlesubmit} noValidate className="needs-validation">
 
             <div className="mb-3">
             <label htmlFor="title" className="form-label">Title</label>
-            <input id="title" name="title" className="form-control"value={listing.title}onChange={handlechange} type="text"/> 
+            <input id="title" name="title" className="form-control"value={listing.title}onChange={handlechange} type="text" required/> 
+            <div class="valid-feedback"> Title Looks good </div>
             </div>
 
             <div className="mb-3">
             <label htmlFor="description" className="form-label">Description</label>
-             <textarea id="description"name="description" className="form-control" value={listing.description}onChange={handlechange}/> 
+             <textarea id="description"name="description" className="form-control" value={listing.description}onChange={handlechange} required/> 
+            <div className="invalid-feedback">Give a short description</div>
             </div>
 
              <div className="mb-3">
             <label htmlFor="image" className="form-label">Image Link</label>
-             <input id="image"name="image" className="form-control"value={listing.image.url}onChange={handlechange} type="text"/>
+             <input id="image"name="image" className="form-control"value={listing.image.url}onChange={handlechange} type="text" required/>
+            <div className="invalid-feedback">Enter a valid url image link </div>
             </div>
 
             <div className="row">
             <div className="mb-3 col-md-4">
             <label htmlFor="price" className="form-label">Price</label>
-            <input id="price"name="price" className="form-control"value={listing.price}onChange={handlechange} type="number"/>
+            <input id="price"name="price" className="form-control"value={listing.price}onChange={handlechange} type="number" required/>
+            <div className="invalid-feedback">Price should be valid</div>
             </div>
 
             <div className="mb-3 col-md-8">
             <label htmlFor="country" className="form-label">Country</label>
-             <input id="country" name="country" className="form-control"  value={listing.country}onChange={handlechange} type="text"/>
+             <input id="country" name="country" className="form-control"  value={listing.country}onChange={handlechange} type="text" required/>
+            <div className="invalid-feedback">Country name should be valid</div>
             </div>
            </div>
 
             <div className="mb-3">
             <label htmlFor="location" className="form-label">Location</label>
-            <input id="location" name="location" className="form-control" value={listing.location} onChange={handlechange} type="text"/>
+            <input id="location" name="location" className="form-control" value={listing.location} onChange={handlechange} type="text" required/>
+            <div className="invalid-feedback">Location should be valid</div>
             </div>
             
             <button className="btn btn-dark mb-2 edit-btn">Edit</button>

@@ -23,6 +23,10 @@ created card component and render in index.jsx
 created card css also put anchor tag in index.jsx for cards 
 done index.jsx
 done new form styled 
+done edit form
+done show page styled 
 
+Project Phase 1c : 
+handled client side validation
 
 
