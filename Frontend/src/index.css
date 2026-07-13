@@ -24,3 +24,21 @@ body{
     background-color: #fe424d;
     border: none !important;
 }
+
+/* Show Page */
+.show-img {
+    height : 30vh;
+}
+
+.btns{
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.show-card {
+    padding-left: 0;
+    padding-right: 0;
+}

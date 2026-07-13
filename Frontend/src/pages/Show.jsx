@@ -28,21 +28,31 @@ export default function Show(){
     }
 
     return(
-        <>
-        <h3> Listing Details : </h3>
-       <ul>
-            <li>{listing.title}</li>
-            <li>{listing.description}</li>
-            <li>{`\u20B9`}{listing.price?.toLocaleString("en-IN")}</li>
-            <li>{listing.location}</li>
-            <li>{listing.country}</li>
-       </ul>
-       <br/>
-       <Link to={`/listings/${listing._id}/edit`}>
-            <button>Edit this listing</button>
-       </Link>
-        <br/><br/>
-        <button onClick={handleDelete}>Delete this Listing</button>
-        </>
+        <div className="row mt-3">
+            {/* Heading */}
+            <div className="col-8 offset-3">
+                 <h3> Listing Details : </h3>
+            </div>
+            {/* Card Image */}
+            <div className="card col-6 offset-3 show-card">
+                <img src={listing.image?.url} className="card-img-top show-img" alt="listing Image"/>
+            {/* Card details  */}
+            <div className="card-body">
+                <p className="card-text">
+                    <b>{listing.title}</b><br/>
+                    {listing.description}<br/>
+                    {`\u20B9`}{listing.price?.toLocaleString("en-IN")}<br/>
+                    {listing.location}<br/>
+                    {listing.country}
+                </p>
+                <div className="btns">
+                    <Link to={`/listings/${listing._id}/edit`}>
+                        <button className="btn btn-dark edit-btn">Edit</button>
+                    </Link>
+                    <button className="btn btn-dark" onClick={handleDelete}>Delete</button>
+                </div>
+            </div>
+            </div>
+        </div>
     );
 };

@@ -3,7 +3,7 @@ import "./App.css";
 import axios from "axios";
 import { Routes,Route } from "react-router-dom";
 import Index from "./pages/Index";
-import Show from "./pages/show";
+import Show from "./pages/Show.jsx";
 import NewForm from "./pages/NewForm";
 import Editform from "./pages/Editform";
 import Navbar from "./components/Navbar";
