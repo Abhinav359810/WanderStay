@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useBootstrapValidation from "../hooks/useBootstrapValidation";
+import toast from 'react-hot-toast';
 
 export default function NewForm(){
 
@@ -16,7 +17,6 @@ export default function NewForm(){
         location:""
      });
 
-
     function handlechange(event){
         setListing((prevlist)=>{
             return {...prevlist, [event.target.name] : event.target.value}
@@ -28,7 +28,9 @@ export default function NewForm(){
         axios.post("http://localhost:8080/listings",listing)
         .then(()=>{
             navigate('/listings');
+            toast.success("Listing Created Successfully!")
         }).catch((err)=>{
+            toast.error(err.response.data);
             console.log(err);
         });
     }
@@ -62,7 +64,7 @@ export default function NewForm(){
             <div className="row">
             <div className="mb-3 col-md-4">
             <label htmlFor="price" className="form-label">Price</label>
-            <input id="price"name="price" className="form-control"placeholder="1500"value={listing.price}onChange={handlechange} required/>
+            <input id="price"name="price" className="form-control"placeholder="1500"  value={listing.price}onChange={handlechange} required />
             <div className="invalid-feedback">Please enter a valid Price</div>
             </div>
 

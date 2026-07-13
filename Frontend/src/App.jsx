@@ -8,11 +8,14 @@ import NewForm from "./pages/NewForm";
 import Editform from "./pages/Editform";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import PageNotFound from "./components/PageNotFound.jsx";
+import { Toaster } from "react-hot-toast";
 
 function App() {
     return(
       <>
       <Navbar/>
+      <Toaster position="top-center" />
 
       {/* creating Routes container */}
       <div className="container">
@@ -21,6 +24,7 @@ function App() {
         <Route path = '/listings/new' element = {<NewForm/>}/>
         <Route path = '/listings/:id' element={<Show/>}/>
         <Route path = '/listings/:id/edit' element={<Editform/>}/>
+        <Route path = '*' element={<PageNotFound/>}/>
       </Routes>
       </div>
 
