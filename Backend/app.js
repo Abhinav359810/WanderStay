@@ -5,15 +5,23 @@
     const Listing = require("./Models/listing.js");
     const cors = require("cors");
     const ExpressError = require("./utils/ExpressError.js");
-
+    const {listingSchema} = require("./utils/Schema.js");
 
     const MONGO_URL = "mongodb://127.0.0.1:27017/WanderStay";
 
     //middlewares
     app.use(cors());
-    // app.use(express.urlencoded({extended:true})); for ejs
     app.use(express.json())
+ // app.use(express.urlencoded({extended:true})); for ejs
 
+    const validateListing = (req,res,next) =>{
+        let {error} = listingSchema.validate(req.body);
+        if(error){
+            throw new ExpressError(400 , error.message);
+        }else{
+            next();
+        }
+    }
 
     //root route
     app.get("/",(req,res)=>{
@@ -34,18 +42,15 @@
     });
 
     //create route
-    app.post('/listings',async (req,res)=>{
-        if(!req.body){
-            throw new ExpressError(400 , "Send valid data for listing");
-        }
-        const listingData = {
-                ...req.body,
-                    image: {
-                        filename: "listingimage",
-                        url: req.body.image
-                    }
-                };
-        const listing = new Listing(listingData);
+    app.post('/listings',validateListing, async (req,res)=>{
+        // const listingData = {
+        //         ...req.body.listing,
+        //             image: {
+        //                 filename: "listingimage",
+        //                 url: req.body.listing.image
+        //             }
+        //         };
+        const listing = new Listing(req.body);
         await listing.save();
         res.json({
             message:"Listing Created Successfully!"
@@ -62,14 +67,12 @@
     // });
 
     //update route
-    app.put('/listings/:id',async (req,res)=>{
-        if(!req.body){
-            throw new ExpressError(400 , "Send valid data for listing");
-        }
+    app.put('/listings/:id',validateListing, async (req,res)=>{
         let {id} = req.params;
+        console.log(req.body);
         await Listing.findByIdAndUpdate(id,req.body);
         res.json({
-            message:"Updated"
+            message:"Listing Updated Successfully !!!"
         });
     })
 
@@ -81,28 +84,6 @@
             message : "deleted"
         });
     });
-
-    // //testreact
-    // app.get("/react",(req,res)=>{
-    //     res.json({
-    //         title : "Villa"
-    //     });
-    // });
-
-    // //testroot
-    // app.get("/listing", async (req,res)=>{
-    //    let SampleListing = new Listing({
-    //     title : "Boom Beach",
-    //     description : "testing ",
-    //     price : 1200,
-    //     location : "chicago",
-    //     country : "USA",
-    //    });
-
-    //    await SampleListing.save();
-    //    console.log("sample was saved");
-    //    res.send("saved to DB");
-    // });
 
     //checking if connected to db
     main().then(()=>{

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import useBootstrapValidation from "../hooks/useBootstrapValidation";
+import toast from 'react-hot-toast';
 
 export default function Editform(){
 
@@ -21,7 +22,16 @@ export default function Editform(){
     useEffect(()=>{
         axios.get(`http://localhost:8080/listings/${id}`)
         .then((res)=>{
-            setListing(res.data);
+            // setListing(res.data);
+             const { title, description, image, price, country, location } = res.data;
+            setListing({
+                title,
+                description,
+                image,
+                price,
+                country,
+                location
+            });
         }).catch((err)=>{
             console.log(err);
         })
@@ -30,8 +40,12 @@ export default function Editform(){
     function handlesubmit(event){
         event.preventDefault();
         axios.put(`http://localhost:8080/listings/${id}`,listing)
-        .then(()=>{
+        .then((res)=>{
             navigate('/listings');
+            toast.success(res.data.message);
+        }).catch((err)=>{
+            toast.error(err.response.data);
+            console.log(err);
         });
     }
 
@@ -71,7 +85,7 @@ export default function Editform(){
             <div className="row">
             <div className="mb-3 col-md-4">
             <label htmlFor="price" className="form-label">Price</label>
-            <input id="price"name="price" className="form-control"value={listing.price}onChange={handlechange} type="number" required/>
+            <input id="price"name="price" className="form-control"value={listing.price}onChange={handlechange}  required/>
             <div className="invalid-feedback">Price should be valid</div>
             </div>
 
