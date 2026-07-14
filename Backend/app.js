@@ -5,8 +5,10 @@
     const Listing = require("./Models/listing.js");
     const cors = require("cors");
     const ExpressError = require("./utils/ExpressError.js");
-    const {listingSchema} = require("./utils/Schema.js");
+    const {listingSchema,reviewSchema} = require("./utils/Schema.js");
+    const Review  = require("./Models/review.js");
 
+    
     const MONGO_URL = "mongodb://127.0.0.1:27017/WanderStay";
 
     //middlewares
@@ -16,14 +18,22 @@
 
     const validateListing = (req, res, next) => {
     const { error } = listingSchema.validate(req.body);
-
     if (error) {
         const errMsg = error.details.map(el => el.message).join(", ");
         throw new ExpressError(400, errMsg);
     }
-
     next();
 };
+
+    const validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const errMsg = error.details.map(el => el.message).join(", ");
+        throw new ExpressError(400, errMsg);
+    }
+    next();
+};
+
 
     //root route
     app.get("/",(req,res)=>{
@@ -39,7 +49,7 @@
     //show route
     app.get("/listings/:id",async (req,res)=>{
         let {id} = req.params;
-        const listing = await Listing.findById(id);
+        const listing = await Listing.findById(id).populate("reviews");
         res.json(listing);
     });
 
@@ -83,6 +93,22 @@
         await Listing.findByIdAndDelete(id);
         res.json({
             message : "deleted"
+        });
+    });
+
+    // Reviews Routes
+    //Post route
+    app.post("/listings/:id/reviews",validateReview, async (req,res)=>{
+        let {id} = req.params;
+        let listing = await Listing.findById(id);
+        let newReview = new Review(req.body);
+
+        listing.reviews.push(newReview);
+        await newReview.save();
+        await listing.save();
+
+        res.json({
+            message : "Added review!"
         });
     });
 

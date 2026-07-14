@@ -3,7 +3,7 @@ import "./Card.css";
 export default function Card({image,title,price}){
     return (
         <>
-        <div className="card col">
+        <div className="card col listing-card">
         <img src={image} className="card-img-top" alt="listing image"/>
         <div className="card-img-overlay"></div>
         <div className="card-body">

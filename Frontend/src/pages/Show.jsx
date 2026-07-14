@@ -1,9 +1,24 @@
 import axios from "axios";
 import { useEffect,useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import useBootstrapValidation from "../hooks/useBootstrapValidation";
+import toast from 'react-hot-toast';
 
 export default function Show(){
-    const [listing,setListing] = useState({});
+    const [listing, setListing] = useState({
+    title: "",
+    description: "",
+    image: "",
+    price: "",
+    location: "",
+    country: "",
+    reviews: []
+    });
+
+    const[review,setReview] = useState({
+        rating:1,
+        comment:""
+    });
 
    // Get ID from React Router URL
     const {id} = useParams();
@@ -20,12 +35,36 @@ export default function Show(){
         });
     },[id]);
 
+    // Handling Listing Delete 
     function handleDelete(){
         axios.delete(`http://localhost:8080/listings/${listing._id}`)
         .then(()=>{
             navigate('/listings');
         });
     }
+
+    // Handle change review
+    function handlechange(event){
+        setReview((prevreview)=>{
+            return {...prevreview, [event.target.name] : event.target.value}
+        });
+    }
+
+    // Handling Submit Review
+    function handleReview(event){
+        event.preventDefault();
+        axios.post(`http://localhost:8080/listings/${id}/reviews`,review).
+        then((res)=>{
+            navigate(`/listings/${id}`);
+            toast.success(res.data.message);
+        }).catch((err)=>{
+            toast.error(err.response.data);
+            console.log(err);
+        })
+    };
+
+    // For client side validation
+    useBootstrapValidation();
 
     return(
         <div className="row mt-3">
@@ -34,7 +73,7 @@ export default function Show(){
                  <h3>{listing.title}</h3>
             </div>
             {/* Card Image */}
-            <div className="card col-6 offset-3 show-card">
+            <div className="card col-6 offset-3 show-card listing-card">
                 <img src={listing.image?.url} className="card-img-top show-img" alt="listing Image"/>
             {/* Card details  */}
             <div className="card-body">
@@ -51,7 +90,53 @@ export default function Show(){
                     <button className="btn btn-dark" onClick={handleDelete}>Delete</button>
                 </div>
             </div>
+            </div>      
+        {/* Reviews Section */} 
+        <div className="col-8 offset-3 mb-3">
+            <hr />
+            <h4>Leave a Review</h4>
+            <form onSubmit={handleReview} noValidate className="needs-validation"> 
+                 {/* Rating Slider */}
+                <div className="mb-3 mt-3">
+                <label htmlFor="rating" className="form-label">Rating</label>
+                <input type="range" min="1" max="5" id="rating" name="rating" className="form-range" value={review.rating} onChange={handlechange} required/>
+                </div>
+
+                {/* Comments  */}
+                <div className="mb-3 mt-3">
+                <label htmlFor="comment" className="form-label">Comments</label>
+                <textarea
+                    name="comment"
+                    id="comment"
+                    cols="30"
+                    rows="5"
+                    value={review.comment}
+                    onChange={handlechange}
+                    className="form-control"
+                    required
+                ></textarea>
+                 <div className="invalid-feedback">Please add some comments </div>
+                </div>
+
+                <button  className="btn btn-outline-dark">Submit</button>
+            </form>
+            <hr/>
+        {/* All reviews section */}
+        <p><b>All Reviews</b></p>
+        <div className="row">
+        {
+            listing.reviews.map((review) => (
+            <div className="card col-5 ms-3 mb-3" key={review._id}>
+               <div className="card-body">
+                <h5 className="card-title">User</h5>
+                 <p className="card-text">{review.rating} stars</p>
+                 <p className="card-text">{review.comment}</p>
+               </div>
             </div>
+            ))
+        }
         </div>
+        </div>
+    </div>
     );
 };
