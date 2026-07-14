@@ -11,7 +11,7 @@ export default function NewForm(){
     const[listing,setListing] = useState({
         title :"",
         description:"",
-        image:"",
+        image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1173&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         price:"",
         country:"",
         location:""
@@ -26,9 +26,9 @@ export default function NewForm(){
     function handlesubmit(event){
         event.preventDefault();
         axios.post("http://localhost:8080/listings",listing)
-        .then(()=>{
+        .then((res)=>{
             navigate('/listings');
-            toast.success("Listing Created Successfully!")
+            toast.success(res.data.message);
         }).catch((err)=>{
             toast.error(err.response.data);
             console.log(err);

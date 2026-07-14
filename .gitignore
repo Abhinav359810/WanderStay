@@ -38,3 +38,6 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Specific Files
+progress.txt

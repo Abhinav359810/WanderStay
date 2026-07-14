@@ -27,7 +27,7 @@ export default function Index(){
             list.map((item)=>{
             return(
                 <Link className="listing-link" to={`/listings/${item._id}/`}>
-                <Card key={item._id} image={item.image.url} title = {item.title} price={item.price}/>
+                <Card key={item._id} image={item.image?.url} title = {item.title} price={item.price}/>
                 </Link>
             )
         })

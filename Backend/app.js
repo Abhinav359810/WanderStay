@@ -38,11 +38,17 @@
         if(!req.body){
             throw new ExpressError(400 , "Send valid data for listing");
         }
-        const listing = new Listing(req.body);
-        console.log(req.body);
+        const listingData = {
+                ...req.body,
+                    image: {
+                        filename: "listingimage",
+                        url: req.body.image
+                    }
+                };
+        const listing = new Listing(listingData);
         await listing.save();
         res.json({
-            message:"created"
+            message:"Listing Created Successfully!"
         });
         // we have to send back some response then only axios will get response and then method execute and then only
         // use navigate will work 
