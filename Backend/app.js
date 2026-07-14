@@ -14,14 +14,16 @@
     app.use(express.json())
  // app.use(express.urlencoded({extended:true})); for ejs
 
-    const validateListing = (req,res,next) =>{
-        let {error} = listingSchema.validate(req.body);
-        if(error){
-            throw new ExpressError(400 , error.message);
-        }else{
-            next();
-        }
+    const validateListing = (req, res, next) => {
+    const { error } = listingSchema.validate(req.body);
+
+    if (error) {
+        const errMsg = error.details.map(el => el.message).join(", ");
+        throw new ExpressError(400, errMsg);
     }
+
+    next();
+};
 
     //root route
     app.get("/",(req,res)=>{
@@ -69,7 +71,6 @@
     //update route
     app.put('/listings/:id',validateListing, async (req,res)=>{
         let {id} = req.params;
-        console.log(req.body);
         await Listing.findByIdAndUpdate(id,req.body);
         res.json({
             message:"Listing Updated Successfully !!!"
