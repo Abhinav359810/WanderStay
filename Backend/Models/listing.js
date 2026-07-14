@@ -1,7 +1,8 @@
 
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 //created schema 
-const listingSchema = mongoose.Schema({
+const listingSchema = new Schema({
     
         title : {
             type : String,
@@ -16,6 +17,12 @@ const listingSchema = mongoose.Schema({
         price : Number,
         location : String,
         country : String,
+        reviews : [
+            {
+                type : Schema.Types.ObjectId,
+                ref : "Reviews",
+            }
+        ]
 });
 //creating model = collection = Listing
 const Listing = new mongoose.model("Listing",listingSchema);

@@ -31,7 +31,7 @@ export default function Show(){
         <div className="row mt-3">
             {/* Heading */}
             <div className="col-8 offset-3">
-                 <h3> Listing Details : </h3>
+                 <h3>{listing.title}</h3>
             </div>
             {/* Card Image */}
             <div className="card col-6 offset-3 show-card">
@@ -39,7 +39,6 @@ export default function Show(){
             {/* Card details  */}
             <div className="card-body">
                 <p className="card-text">
-                    <b>{listing.title}</b><br/>
                     {listing.description}<br/>
                     {`\u20B9`}{listing.price?.toLocaleString("en-IN")}<br/>
                     {listing.location}<br/>
