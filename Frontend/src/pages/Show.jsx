@@ -25,21 +25,30 @@ export default function Show(){
 
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        //Fetch data from Express API using the ID
-        axios.get(`http://localhost:8080/listings/${id}`)
-        .then((res)=>{
+   //Fetch data from Express API using the ID
+    function fetchListing() {
+    axios.get(`http://localhost:8080/listings/${id}`)
+        .then((res) => {
             setListing(res.data);
-        }).catch((err)=>{
+        })
+        .catch((err) => {
             console.log(err);
         });
-    },[id]);
+    }
+
+    useEffect(() => {
+        fetchListing();
+    }, [id]);
 
     // Handling Listing Delete 
     function handleDelete(){
         axios.delete(`http://localhost:8080/listings/${listing._id}`)
-        .then(()=>{
+        .then((res)=>{
             navigate('/listings');
+            toast.success(res.data.message);
+        }).catch((err)=>{
+            toast.error(err.response.data);
+            console.log(err);
         });
     }
 
@@ -55,8 +64,22 @@ export default function Show(){
         event.preventDefault();
         axios.post(`http://localhost:8080/listings/${id}/reviews`,review).
         then((res)=>{
-            navigate(`/listings/${id}`);
+            // navigate(`/listings/${id}`);
             toast.success(res.data.message);
+            fetchListing();
+        }).catch((err)=>{
+            toast.error(err.response.data);
+            console.log(err);
+        })
+    };
+
+    //Handling review deleted 
+    function handleReviewDelete(reviewId){
+        axios.delete(`http://localhost:8080/listings/${id}/reviews/${reviewId}`).
+        then((res)=>{
+            toast.success(res.data.message);
+            // navigate(`/listings/${id}`);
+            fetchListing();
         }).catch((err)=>{
             toast.error(err.response.data);
             console.log(err);
@@ -132,6 +155,7 @@ export default function Show(){
                  <p className="card-text">{review.rating} stars</p>
                  <p className="card-text">{review.comment}</p>
                </div>
+                    <button key={review._id} onClick={()=>handleReviewDelete(review._id)}className="btn btn-sm btn-dark mt-2 mb-2 align-self-start" style={{ width: "fit-content", padding: "0.25rem 0.75rem" }}>Delete</button>
             </div>
             ))
         }

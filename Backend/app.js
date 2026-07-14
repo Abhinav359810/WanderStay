@@ -8,7 +8,7 @@
     const {listingSchema,reviewSchema} = require("./utils/Schema.js");
     const Review  = require("./Models/review.js");
 
-    
+
     const MONGO_URL = "mongodb://127.0.0.1:27017/WanderStay";
 
     //middlewares
@@ -71,13 +71,6 @@
         // use navigate will work 
     });
 
-    // //Edit route
-    // app.get('/listings/:id/edit',async (req,res)=>{
-    //     let {id} = req.params;
-    //     const listing = await Listing.findById(id);
-    //     res.json(listing);
-    // });
-
     //update route
     app.put('/listings/:id',validateListing, async (req,res)=>{
         let {id} = req.params;
@@ -92,7 +85,7 @@
         let {id} = req.params;
         await Listing.findByIdAndDelete(id);
         res.json({
-            message : "deleted"
+            message : "Listing deleted!"
         });
     });
 
@@ -110,6 +103,17 @@
         res.json({
             message : "Added review!"
         });
+    });
+
+    //delete route review
+    app.delete("/listings/:id/reviews/:reviewId", async (req,res)=>{
+        let {id,reviewId} =  req.params;
+        await Listing.findByIdAndUpdate(id,{$pull:{reviews : reviewId}});
+        await Review.findByIdAndDelete(reviewId);
+
+        res.json({
+            message : "Review Deleted"
+        })
     });
 
     //checking if connected to db
