@@ -49,17 +49,6 @@
     app.use("/listings/:id/reviews",reviewRouter);
     app.use("/",userRouter);
 
-    // app.get('/demouser',async (req,res)=>{
-    //     let fakeuser = new User({
-    //         email : "test@gmail.com",
-    //         username : "Abhi"
-    //     });
-
-    // let registeredUser = await User.register(fakeuser,'123');
-    //    console.log(registeredUser);
-    //    res.send(registeredUser);
-    // }) 
-
     //checking if connected to db
     main().then(()=>{
         console.log("Succesfully Conneced to Database ");

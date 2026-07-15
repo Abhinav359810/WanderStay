@@ -4,6 +4,15 @@ const ExpressError = require("../utils/ExpressError");
 const passport = require("passport");
 const router = express.Router();
 
+//Checking User logged in or not for authorization
+router.get("/current-user", (req, res) => {
+    if (req.isAuthenticated()) {
+        return res.json(req.user);
+    }
+
+    res.status(401).send("Not Logged In");
+});
+
 //Signup Post Route
 router.post("/signup", async (req, res) => {
     try {
@@ -25,10 +34,25 @@ router.post("/signup", async (req, res) => {
 //Login Post Route
 router.post(
     "/login", 
-    passport.authenticate("local"), (req, res) => {
-    res.json({
-        message : "Welcome Back to WanderStay!"
-    });
-});
+    (req,res,next)=>{
+        passport.authenticate("local",(err,user,info)=>{
+            if(err){
+                return next(err);
+            }
+
+            if(!user){
+                return new next(new ExpressError (401,info.message));
+            }
+
+            req.logIn(user,(err)=>{
+                if(err) return next(err);
+
+                return res.json({
+                    message : "Welcome Back to Wander Stay!"
+                });
+            });
+        })(req,res,next);
+    }
+);
 
 module.exports = router;

@@ -21,7 +21,7 @@ export default function Login(){
 
     function handlesubmit(event){
         event.preventDefault();
-        axios.post("http://localhost:8080/login",user).
+        axios.post("http://localhost:8080/login",user,{withCredentials:true}).
         then((res)=>{
             toast.success(res.data.message);
             navigate('/listings');
@@ -50,7 +50,6 @@ export default function Login(){
                             onChange={handlechange}
                             required
                         />
-                    <div className="valid-feedback">Looks good!</div>
                     </div>
                     {/* Password */}
                     <div className="mb-3">

@@ -22,7 +22,7 @@ export default function Signup(){
 
     function handlesubmit(event){
         event.preventDefault();
-        axios.post("http://localhost:8080/signup",user).
+        axios.post("http://localhost:8080/signup",user,{withCredentials:true}).
         then((res)=>{
             toast.success(res.data.message);
             navigate('/listings');

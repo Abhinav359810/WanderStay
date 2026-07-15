@@ -24,8 +24,8 @@ const ExpressError = require("../utils/ExpressError.js");
         let {id} = req.params;
         const listing = await Listing.findById(id).populate("reviews");
         if(!listing){
-            // throw new ExpressError(400,"Listing Does not Exists");
-            res.status(400).json("Listing Does not exits");
+            throw new ExpressError(400,"Listing Does not Exists");
+            // res.status(400).json("Listing Does not exits");
         }
         res.json(listing);
     });
