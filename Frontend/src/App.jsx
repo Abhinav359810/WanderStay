@@ -10,6 +10,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PageNotFound from "./components/PageNotFound.jsx";
 import { Toaster } from "react-hot-toast";
+import Signup from "./pages/Signup.jsx";
+import Login from "./pages/login.jsx";
 
 function App() {
     return(
@@ -24,6 +26,8 @@ function App() {
         <Route path = '/listings/new' element = {<NewForm/>}/>
         <Route path = '/listings/:id' element={<Show/>}/>
         <Route path = '/listings/:id/edit' element={<Editform/>}/>
+        <Route path = '/signup' element={<Signup/>}/>
+        <Route path = '/login' element={<Login/>}/>
         <Route path = '*' element={<PageNotFound/>}/>
       </Routes>
       </div>

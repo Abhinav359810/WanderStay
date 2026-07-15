@@ -33,6 +33,7 @@ export default function Show(){
         })
         .catch((err) => {
             console.log(err);
+            toast.error(err.response.data);
         });
     }
 

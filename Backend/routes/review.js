@@ -26,7 +26,7 @@ const {reviewSchema} = require("../utils/Schema.js");
         await listing.save();
 
         res.json({
-            message : "Added review!"
+            message : "your review has been added!"
         });
     });
 

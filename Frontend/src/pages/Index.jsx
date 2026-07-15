@@ -9,7 +9,7 @@ export default function Index(){
     const [list, setList] = useState([]);
 
     useEffect(()=>{
-       axios.get("http://localhost:8080/listings")
+       axios.get("http://localhost:8080/listings",{withCredentials:true})
        .then((res)=>{
         setList(res.data)
        }).catch((err)=>{

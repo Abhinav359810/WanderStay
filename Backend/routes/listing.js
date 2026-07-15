@@ -13,7 +13,7 @@ const ExpressError = require("../utils/ExpressError.js");
     next();
     };
 
-      //index route 
+    //index route 
     router.get("/",async (req,res)=>{
         const allListings = await Listing.find({});
         res.json(allListings);
@@ -23,6 +23,10 @@ const ExpressError = require("../utils/ExpressError.js");
     router.get("/:id",async (req,res)=>{
         let {id} = req.params;
         const listing = await Listing.findById(id).populate("reviews");
+        if(!listing){
+            // throw new ExpressError(400,"Listing Does not Exists");
+            res.status(400).json("Listing Does not exits");
+        }
         res.json(listing);
     });
 

@@ -5,12 +5,17 @@
     const cors = require("cors");
     const ExpressError = require("./utils/ExpressError.js");
     const session = require("express-session");
+    const passport = require("passport");
+    const LocalStrategy =  require("passport-local");
+    const User = require("./Models/user.js");
 
-    const listings = require("./routes/listing.js");
-    const reviews = require("./routes/review.js");
+    const listingRouter = require("./routes/listing.js");
+    const reviewRouter = require("./routes/review.js");
+    const userRouter = require("./routes/user.js");
 
     const MONGO_URL = "mongodb://127.0.0.1:27017/WanderStay";
 
+    //configuring Express Session
     const sessionOptions = {
         secret : "74656%%^#*@(@)@jrfkeorfjkowedo",
         resave : false,
@@ -21,19 +26,39 @@
             httpOnly : true
         },
     };
+    app.use(session(sessionOptions));
 
-    //middlewares
+    //Configuring passport 
+    app.use(passport.initialize());
+    app.use(passport.session());
+    passport.use(new LocalStrategy(User.authenticate()));
+    passport.serializeUser(User.serializeUser());
+    passport.deserializeUser(User.deserializeUser());
+
+    
     app.use(cors({
-        origin: "http://localhost:5173",
+        // origin: "http://localhost:5173",
+        origin : true, 
         credentials: true
     }));
     app.use(express.json())
-    app.use(session(sessionOptions));
     // app.use(express.urlencoded({extended:true})); for ejs
 
     //routes
-    app.use("/listings",listings);
-    app.use("/listings/:id/reviews",reviews);
+    app.use("/listings",listingRouter);
+    app.use("/listings/:id/reviews",reviewRouter);
+    app.use("/",userRouter);
+
+    // app.get('/demouser',async (req,res)=>{
+    //     let fakeuser = new User({
+    //         email : "test@gmail.com",
+    //         username : "Abhi"
+    //     });
+
+    // let registeredUser = await User.register(fakeuser,'123');
+    //    console.log(registeredUser);
+    //    res.send(registeredUser);
+    // }) 
 
     //checking if connected to db
     main().then(()=>{
