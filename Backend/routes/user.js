@@ -6,6 +6,7 @@ const router = express.Router();
 
 //Checking User logged in or not for authorization
 router.get("/current-user", (req, res) => {
+    console.log(req.user);
     if (req.isAuthenticated()) {
         return res.json(req.user);
     }
@@ -18,9 +19,15 @@ router.post("/signup", async (req, res) => {
     try {
         const { username, email, password } = req.body;
         const newUser = new User({ username, email });
-        await User.register(newUser, password);
-        res.json({
+        const registeredUser = await User.register(newUser, password);
+        //After signup -> Login 
+        req.login(registeredUser,(err)=>{
+            if(err){
+                return next(err);
+            }
+            res.json({
             message: "Welcome to WanderStay"
+        });
         });
     } catch (err) {
         // res.status(409).json({
@@ -41,7 +48,7 @@ router.post(
             }
 
             if(!user){
-                return new next(new ExpressError (401,info.message));
+                return next(new ExpressError(401, info.message));
             }
 
             req.logIn(user,(err)=>{
@@ -54,5 +61,17 @@ router.post(
         })(req,res,next);
     }
 );
+
+//logout
+router.get("/logout",(req,res,next)=>{
+    req.logOut((err)=>{
+        if(err){
+            return next(err);
+        };
+    res.json({
+        message : "Logged Out"
+    });
+    });
+});
 
 module.exports = router;

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useBootstrapValidation from "../hooks/useBootstrapValidation";
 import toast from 'react-hot-toast';
+import { useAuth } from "../context/AuthContext";
 
 export default function Login(){
 
@@ -10,8 +11,11 @@ export default function Login(){
         username : "",
         password : ""
     });
-
+    const {isLoggedIn , setIsLoggedIn} = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from||'/listings';
 
     function handlechange(event){
         setUser((prevUser)=>{
@@ -24,7 +28,8 @@ export default function Login(){
         axios.post("http://localhost:8080/login",user,{withCredentials:true}).
         then((res)=>{
             toast.success(res.data.message);
-            navigate('/listings');
+            setIsLoggedIn(true);
+            navigate(from);
         }).catch((err)=>{
             toast.error(err.response.data);
             console.log(err);

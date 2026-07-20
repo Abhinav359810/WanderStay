@@ -3,6 +3,7 @@ const router = express.Router();
 const Listing = require("../Models/listing.js");
 const {listingSchema} = require("../utils/Schema.js");
 const ExpressError = require("../utils/ExpressError.js");
+const { isLoggedIn } = require("../middleware/auth.js");
 
     const validateListing = (req, res, next) => {
     const { error } = listingSchema.validate(req.body);
@@ -31,7 +32,7 @@ const ExpressError = require("../utils/ExpressError.js");
     });
 
     //create route
-    router.post('/',validateListing, async (req,res)=>{
+    router.post('/', isLoggedIn ,validateListing, async (req,res)=>{
         // const listingData = {
         //         ...req.body.listing,
         //             image: {
@@ -47,7 +48,7 @@ const ExpressError = require("../utils/ExpressError.js");
     });
 
     //update route
-    router.put('/:id',validateListing, async (req,res)=>{
+    router.put('/:id',isLoggedIn,validateListing, async (req,res)=>{
         let {id} = req.params;
         await Listing.findByIdAndUpdate(id,req.body);
         res.json({
@@ -56,7 +57,7 @@ const ExpressError = require("../utils/ExpressError.js");
     })
 
     //Delete Route
-    router.delete("/:id", async (req,res) =>{
+    router.delete("/:id",isLoggedIn, async (req,res) =>{
         let {id} = req.params;
         await Listing.findByIdAndDelete(id);
         res.json({

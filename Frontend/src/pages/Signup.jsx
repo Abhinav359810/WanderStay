@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useBootstrapValidation from "../hooks/useBootstrapValidation";
 import toast from 'react-hot-toast';
+import { useAuth } from "../context/AuthContext";
 
 export default function Signup(){
 
@@ -11,7 +12,7 @@ export default function Signup(){
         email : "",
         password : ""
     });
-
+    const {isLoggedIn , setIsLoggedIn} = useAuth();
     const navigate = useNavigate();
 
     function handlechange(event){
@@ -25,6 +26,7 @@ export default function Signup(){
         axios.post("http://localhost:8080/signup",user,{withCredentials:true}).
         then((res)=>{
             toast.success(res.data.message);
+            setIsLoggedIn(true);
             navigate('/listings');
         }).catch((err)=>{
             toast.error(err.response.data);
