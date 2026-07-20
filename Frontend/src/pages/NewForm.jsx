@@ -25,12 +25,12 @@ export default function NewForm(){
 
     function handlesubmit(event){
         event.preventDefault();
-        axios.post("http://localhost:8080/listings",listing)
+        axios.post("http://localhost:8080/listings", listing, { withCredentials: true })
         .then((res)=>{
             navigate('/listings');
             toast.success(res.data.message);
         }).catch((err)=>{
-            toast.error(err.response.data);
+            toast.error(err.response?.data || 'Create failed');
             console.log(err);
         });
     }

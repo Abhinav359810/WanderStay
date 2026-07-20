@@ -43,7 +43,7 @@ export default function Show(){
 
     // Handling Listing Delete 
     function handleDelete(){
-        axios.delete(`http://localhost:8080/listings/${listing._id}`)
+        axios.delete(`http://localhost:8080/listings/${listing._id}`, { withCredentials: true })
         .then((res)=>{
             navigate('/listings');
             toast.success(res.data.message);
@@ -76,7 +76,7 @@ export default function Show(){
 
     //Handling review deleted 
     function handleReviewDelete(reviewId){
-        axios.delete(`http://localhost:8080/listings/${id}/reviews/${reviewId}`).
+        axios.delete(`http://localhost:8080/listings/${id}/reviews/${reviewId}`, { withCredentials: true }).
         then((res)=>{
             toast.success(res.data.message);
             // navigate(`/listings/${id}`);
@@ -101,12 +101,12 @@ export default function Show(){
                 <img src={listing.image?.url} className="card-img-top show-img" alt="listing Image"/>
             {/* Card details  */}
             <div className="card-body">
-                <p className="card-text">
-                    {listing.description}<br/>
-                    {`\u20B9`}{listing.price?.toLocaleString("en-IN")}<br/>
-                    {listing.location}<br/>
-                    {listing.country}
-                </p>
+                <p className="card-text">Owned by <i>{listing.owner?.username || 'Unknown'}</i></p>
+                <p className="card-text"> {listing.description}<br/></p>
+                <p className="card-text">{`\u20B9`}{listing.price?.toLocaleString("en-IN")}<br/></p>
+                <p className="card-text">{listing.location}</p>
+                <p className="card-text">  {listing.country}</p>
+                
                 <div className="btns">
                     <Link to={`/listings/${listing._id}/edit`}>
                         <button className="btn btn-dark edit-btn">Edit</button>

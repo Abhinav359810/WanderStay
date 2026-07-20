@@ -23,7 +23,7 @@ const { isLoggedIn } = require("../middleware/auth.js");
     //show route
     router.get("/:id",async (req,res)=>{
         let {id} = req.params;
-        const listing = await Listing.findById(id).populate("reviews");
+        const listing = await Listing.findById(id).populate("reviews").populate("owner");
         if(!listing){
             throw new ExpressError(400,"Listing Does not Exists");
             // res.status(400).json("Listing Does not exits");
@@ -41,6 +41,7 @@ const { isLoggedIn } = require("../middleware/auth.js");
         //             }
         //         };
         const listing = new Listing(req.body);
+        listing.owner = req.user._id;
         await listing.save();
         res.json({
             message:"Listing Created Successfully!"

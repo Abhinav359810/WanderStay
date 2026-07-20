@@ -12,6 +12,7 @@ import PageNotFound from "./components/PageNotFound.jsx";
 import toast, { Toaster } from "react-hot-toast";
 import Signup from "./pages/Signup.jsx";
 import Login from "./pages/login.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function App() {
     return(
@@ -23,9 +24,9 @@ function App() {
       <div className="container">
       <Routes>
         <Route path = '/listings' element={<Index/>}/>
-        <Route path = '/listings/new' element = {<NewForm/>}/>
+        <Route path = '/listings/new' element = {<ProtectedRoute><NewForm/></ProtectedRoute>}/>
         <Route path = '/listings/:id' element={<Show/>}/>
-        <Route path = '/listings/:id/edit' element={<Editform/>}/>
+        <Route path = '/listings/:id/edit' element={<ProtectedRoute><Editform/></ProtectedRoute>}/>
         <Route path = '/signup' element={<Signup/>}/>
         <Route path = '/login' element={<Login/>}/>
         <Route path = '*' element={<PageNotFound/>}/>

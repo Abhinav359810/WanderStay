@@ -39,7 +39,7 @@ export default function Editform(){
 
     function handlesubmit(event){
         event.preventDefault();
-        axios.put(`http://localhost:8080/listings/${id}`,listing)
+        axios.put(`http://localhost:8080/listings/${id}`,listing,{withCredentials:true})
         .then((res)=>{
             navigate('/listings');
             toast.success(res.data.message);
