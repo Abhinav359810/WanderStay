@@ -4,15 +4,7 @@ const ExpressError = require("../utils/ExpressError.js");
 const Review  = require("../Models/review.js");
 const Listing = require("../Models/listing.js");
 const {reviewSchema} = require("../utils/Schema.js");
-
-    const validateReview = (req, res, next) => {
-    const { error } = reviewSchema.validate(req.body);
-    if (error) {
-        const errMsg = error.details.map(el => el.message).join(", ");
-        throw new ExpressError(400, errMsg);
-    }
-    next();
-    };
+const { validateReview } = require("../middleware/auth.js");
 
     // Reviews Routes
     //Post route

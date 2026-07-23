@@ -3,16 +3,7 @@ const router = express.Router();
 const Listing = require("../Models/listing.js");
 const {listingSchema} = require("../utils/Schema.js");
 const ExpressError = require("../utils/ExpressError.js");
-const { isLoggedIn } = require("../middleware/auth.js");
-
-    const validateListing = (req, res, next) => {
-    const { error } = listingSchema.validate(req.body);
-    if (error) {
-        const errMsg = error.details.map(el => el.message).join(", ");
-        throw new ExpressError(400, errMsg);
-    }
-    next();
-    };
+const { isLoggedIn,isOwner,validateListing } = require("../middleware/auth.js");
 
     //index route 
     router.get("/",async (req,res)=>{
@@ -49,7 +40,7 @@ const { isLoggedIn } = require("../middleware/auth.js");
     });
 
     //update route
-    router.put('/:id',isLoggedIn,validateListing, async (req,res)=>{
+    router.put('/:id',isLoggedIn,isOwner,validateListing, async (req,res)=>{
         let {id} = req.params;
         await Listing.findByIdAndUpdate(id,req.body);
         res.json({
@@ -58,7 +49,7 @@ const { isLoggedIn } = require("../middleware/auth.js");
     })
 
     //Delete Route
-    router.delete("/:id",isLoggedIn, async (req,res) =>{
+    router.delete("/:id",isLoggedIn,isOwner, async (req,res) =>{
         let {id} = req.params;
         await Listing.findByIdAndDelete(id);
         res.json({

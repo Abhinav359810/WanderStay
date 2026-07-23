@@ -3,6 +3,7 @@ import { useEffect,useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useBootstrapValidation from "../hooks/useBootstrapValidation";
 import toast from 'react-hot-toast';
+import { useAuth } from "../context/AuthContext";
 
 export default function Show(){
     const [listing, setListing] = useState({
@@ -22,7 +23,7 @@ export default function Show(){
 
    // Get ID from React Router URL
     const {id} = useParams();
-
+    const { user } = useAuth();
     const navigate = useNavigate();
 
    //Fetch data from Express API using the ID
@@ -107,12 +108,13 @@ export default function Show(){
                 <p className="card-text">{listing.location}</p>
                 <p className="card-text">  {listing.country}</p>
                 
+                {user && user?._id === listing.owner?._id &&
                 <div className="btns">
                     <Link to={`/listings/${listing._id}/edit`}>
                         <button className="btn btn-dark edit-btn">Edit</button>
                     </Link>
                     <button className="btn btn-dark" onClick={handleDelete}>Delete</button>
-                </div>
+                </div>}
             </div>
             </div>      
         {/* Reviews Section */} 
