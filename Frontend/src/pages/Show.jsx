@@ -23,7 +23,7 @@ export default function Show(){
 
    // Get ID from React Router URL
     const {id} = useParams();
-    const { user } = useAuth();
+    const { isLoggedIn,user } = useAuth();
     const navigate = useNavigate();
 
    //Fetch data from Express API using the ID
@@ -64,7 +64,7 @@ export default function Show(){
     // Handling Submit Review
     function handleReview(event){
         event.preventDefault();
-        axios.post(`http://localhost:8080/listings/${id}/reviews`,review).
+        axios.post(`http://localhost:8080/listings/${id}/reviews`,review,{withCredentials:true}).
         then((res)=>{
             // navigate(`/listings/${id}`);
             toast.success(res.data.message);
@@ -118,8 +118,12 @@ export default function Show(){
             </div>
             </div>      
         {/* Reviews Section */} 
+        
         <div className="col-8 offset-3 mb-3">
+            {/* dynamic render based on user loggined or not  */}
             <hr />
+            {isLoggedIn && (
+            <>
             <h4>Leave a Review</h4>
             <form onSubmit={handleReview} noValidate className="needs-validation"> 
                  {/* Rating Slider */}
@@ -147,6 +151,8 @@ export default function Show(){
                 <button  className="btn btn-outline-dark">Submit</button>
             </form>
             <hr/>
+            </>
+            )}
         {/* All reviews section */}
         <p><b>All Reviews</b></p>
         <div className="row">
@@ -154,11 +160,13 @@ export default function Show(){
             listing.reviews.map((review) => (
             <div className="card col-5 ms-3 mb-3" key={review._id}>
                <div className="card-body">
-                <h5 className="card-title">User</h5>
+                <h5 className="card-title">{review.author.username}</h5>
                  <p className="card-text">{review.rating} stars</p>
                  <p className="card-text">{review.comment}</p>
                </div>
+               {user?._id === review.author._id &&
                     <button key={review._id} onClick={()=>handleReviewDelete(review._id)}className="btn btn-sm btn-dark mt-2 mb-2 align-self-start" style={{ width: "fit-content", padding: "0.25rem 0.75rem" }}>Delete</button>
+               }
             </div>
             ))
         }

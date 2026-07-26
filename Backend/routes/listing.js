@@ -14,7 +14,14 @@ const { isLoggedIn,isOwner,validateListing } = require("../middleware/auth.js");
     //show route
     router.get("/:id",async (req,res)=>{
         let {id} = req.params;
-        const listing = await Listing.findById(id).populate("reviews").populate("owner");
+       const listing = await Listing.findById(id)
+        .populate({
+            path: "reviews",
+            populate: {
+                path: "author",
+            },
+        })
+    .populate("owner");
         if(!listing){
             throw new ExpressError(400,"Listing Does not Exists");
             // res.status(400).json("Listing Does not exits");

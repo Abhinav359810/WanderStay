@@ -17,7 +17,7 @@
 
     //configuring Express Session
     const sessionOptions = {
-        secret : "74656%%^#*@(@)@jrfkeorfjkowedo",
+        secret : "23097423DE2JDCNSFDJWEDWEMFWEFOPWMEFOWEFPWOMEFPWOEMF",
         resave : false,
         saveUninitialized : true,
         cookie: {
