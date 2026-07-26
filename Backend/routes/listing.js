@@ -3,19 +3,17 @@ const router = express.Router();
 const { isLoggedIn,isOwner,validateListing } = require("../middleware/auth.js");
 const listingController = require("../controllers/listing.js"); 
 
-//index route 
-router.get("/", listingController.index);
+//index,create routes
+router
+    .route("/")
+    .get(listingController.index)
+    .post(isLoggedIn ,validateListing, listingController.createListing);
 
-//show route
-router.get("/:id", listingController.showListing);
-
-//create route
-router.post('/', isLoggedIn ,validateListing, listingController.createListing);
-
-//update route
-router.put('/:id',isLoggedIn,isOwner,validateListing,listingController.updateListing);
-
-//Delete Route
-router.delete("/:id",isLoggedIn,isOwner,listingController.deleteListing);
+//show,update,delete routes
+router
+    .route("/:id")
+    .get(listingController.showListing)
+    .put(isLoggedIn,isOwner,validateListing,listingController.updateListing)
+    .delete(isLoggedIn,isOwner,listingController.deleteListing);
 
 module.exports = router;
