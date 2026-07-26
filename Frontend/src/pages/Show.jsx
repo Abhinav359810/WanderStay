@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import useBootstrapValidation from "../hooks/useBootstrapValidation";
 import toast from 'react-hot-toast';
 import { useAuth } from "../context/AuthContext";
+import { Rating } from "react-simple-star-rating";
 
 export default function Show(){
     const [listing, setListing] = useState({
@@ -60,6 +61,14 @@ export default function Show(){
             return {...prevreview, [event.target.name] : event.target.value}
         });
     }
+
+    //handle Rating
+    const handleRating = (rate) =>{
+        setReview((prev)=>({
+            ...prev,
+            rating : rate,
+        }));
+    };
 
     // Handling Submit Review
     function handleReview(event){
@@ -128,8 +137,12 @@ export default function Show(){
             <form onSubmit={handleReview} noValidate className="needs-validation"> 
                  {/* Rating Slider */}
                 <div className="mb-3 mt-3">
-                <label htmlFor="rating" className="form-label">Rating</label>
-                <input type="range" min="1" max="5" id="rating" name="rating" className="form-range" value={review.rating} onChange={handlechange} required/>
+                    <label htmlFor="rating" className="form-label">Rating</label>
+                    <Rating
+                        onClick={handleRating}
+                        initialValue={review.rating}
+                        allowFraction={false}
+                    />
                 </div>
 
                 {/* Comments  */}
@@ -161,7 +174,16 @@ export default function Show(){
             <div className="card col-5 ms-3 mb-3" key={review._id}>
                <div className="card-body">
                 <h5 className="card-title">{review.author.username}</h5>
-                 <p className="card-text">{review.rating} stars</p>
+                {/* stars div */}
+                 <div className="mb-2">
+                 <Rating 
+                    initialValue={review.rating}
+                    readonly={true}
+                    allowFraction={false}
+                    size={22}
+                 />
+                 </div>
+                
                  <p className="card-text">{review.comment}</p>
                </div>
                {user?._id === review.author._id &&
