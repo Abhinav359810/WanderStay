@@ -18,14 +18,24 @@ export default function NewForm(){
      });
 
     function handlechange(event){
-        setListing((prevlist)=>{
-            return {...prevlist, [event.target.name] : event.target.value}
-        });
+        const {name,value,files,type} = event.target;
+        setListing((prevlist)=>({
+            ...prevlist,
+            [name] : type === "file" ? files[0] : value,
+        }));
     }
 
     function handlesubmit(event){
         event.preventDefault();
-        axios.post("http://localhost:8080/listings", listing, { withCredentials: true })
+        const formData = new FormData();
+        formData.append("title",listing.title);
+        formData.append("description",listing.description);
+        formData.append("image",listing.image);
+        formData.append("price",listing.price);
+        formData.append("country",listing.country);
+        formData.append("location",listing.location);
+
+        axios.post("http://localhost:8080/listings", formData, { withCredentials: true })
         .then((res)=>{
             navigate('/listings');
             toast.success(res.data.message);
@@ -42,7 +52,7 @@ export default function NewForm(){
         <div className="row mt-3">
             <div className="col-8 offset-2">
         <h3> Create new Listing </h3>
-        <form onSubmit={handlesubmit} noValidate className="needs-validation"> 
+        <form onSubmit={handlesubmit} noValidate className="needs-validation" encType="multipart/form-data"> 
 
             <div className="mb-3">
             <label htmlFor="title" className="form-label">Title</label>
@@ -57,8 +67,8 @@ export default function NewForm(){
             </div>
 
              <div className="mb-3">
-            <label htmlFor="image" className="form-label">Image Link</label>
-             <input id="image"name="image" className="form-control" placeholder="Enter image Url" value={listing.image}onChange={handlechange} type="text"/>
+            <label htmlFor="image" className="form-label">Upload Image</label>
+             <input id="image"name="image" className="form-control" placeholder="Enter image Url" accept="image/*" type="file" onChange={handlechange}/>
             </div>
 
             <div className="row">

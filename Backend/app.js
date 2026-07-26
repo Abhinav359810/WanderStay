@@ -1,3 +1,7 @@
+    if(process.env.NODE_ENV != "production"){
+        require("dotenv").config();
+    }
+
     //server : The entry point that starts your Express server
     const express = require("express");
     const app = express();

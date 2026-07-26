@@ -24,15 +24,11 @@ module.exports.showListing = async (req,res)=>{
 };
 
 module.exports.createListing = async (req,res)=>{
-        // const listingData = {
-        //         ...req.body.listing,
-        //             image: {
-        //                 filename: "listingimage",
-        //                 url: req.body.listing.image
-        //             }
-        //         };
+        let url = req.file.path;
+        let filename = req.file.filename;
         const listing = new Listing(req.body);
         listing.owner = req.user._id;
+        listing.image = {url,filename};
         await listing.save();
         res.json({
             message:"Listing Created Successfully!"

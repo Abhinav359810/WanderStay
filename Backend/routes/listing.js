@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const {storage} = require("../cloudConfig.js");
+const upload = multer({storage});
 const { isLoggedIn,isOwner,validateListing } = require("../middleware/auth.js");
 const listingController = require("../controllers/listing.js"); 
 
@@ -7,7 +10,7 @@ const listingController = require("../controllers/listing.js");
 router
     .route("/")
     .get(listingController.index)
-    .post(isLoggedIn ,validateListing, listingController.createListing);
+    .post(isLoggedIn ,upload.single("image"),validateListing, listingController.createListing);
 
 //show,update,delete routes
 router
