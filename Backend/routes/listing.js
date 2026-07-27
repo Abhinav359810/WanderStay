@@ -16,7 +16,7 @@ router
 router
     .route("/:id")
     .get(listingController.showListing)
-    .put(isLoggedIn,isOwner,validateListing,listingController.updateListing)
+    .put(isLoggedIn,isOwner,upload.single("image"),validateListing,listingController.updateListing)
     .delete(isLoggedIn,isOwner,listingController.deleteListing);
 
 module.exports = router;

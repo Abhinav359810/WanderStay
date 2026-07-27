@@ -13,7 +13,10 @@ export default function Editform(){
     const[listing,setListing] = useState({
         title :"",
         description:"",
-        image:"",
+        image:{
+            url : "",
+            filename : ""
+        },
         price:"",
         country:"",
         location:""
@@ -39,7 +42,18 @@ export default function Editform(){
 
     function handlesubmit(event){
         event.preventDefault();
-        axios.put(`http://localhost:8080/listings/${id}`,listing,{withCredentials:true})
+        const formData = new FormData();
+        formData.append("title",listing.title);
+        formData.append("description",listing.description);
+        formData.append("price",listing.price);
+        formData.append("country",listing.country);
+        formData.append("location",listing.location);
+
+        if (listing.image instanceof File) {
+           formData.append("image", listing.image);
+        }
+
+        axios.put(`http://localhost:8080/listings/${id}`,formData,{withCredentials:true})
         .then((res)=>{
             navigate('/listings');
             toast.success(res.data.message);
@@ -49,10 +63,12 @@ export default function Editform(){
         });
     }
 
-     function handlechange(event){
-        setListing((prevlist)=>{
-            return {...prevlist, [event.target.name] : event.target.value}
-        });
+    function handlechange(event){
+        const {name,value,files,type} = event.target;
+        setListing((prevlist)=>({
+            ...prevlist,
+            [name] : type === "file" ? files[0] : value,
+        }));
     }
     //hooks
     useBootstrapValidation();
@@ -77,9 +93,8 @@ export default function Editform(){
             </div>
 
              <div className="mb-3">
-            <label htmlFor="image" className="form-label">Image Link</label>
-             <input id="image"name="image" className="form-control"value={listing.image.url}onChange={handlechange} type="text" required/>
-            <div className="invalid-feedback">Enter a valid url image link </div>
+            <label htmlFor="image" className="form-label">Upload New Image</label>
+             <input id="image"name="image" className="form-control" onChange={handlechange} type="file" accept="image/*" />
             </div>
 
             <div className="row">

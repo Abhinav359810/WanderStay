@@ -1,5 +1,6 @@
 const Listing = require("../Models/listing.js");
 const ExpressError = require("../utils/ExpressError.js");
+const { cloudinary } = require("../cloudConfig");
 
 module.exports.index = async (req,res)=>{
         const allListings = await Listing.find({});
@@ -37,7 +38,16 @@ module.exports.createListing = async (req,res)=>{
 
 module.exports.updateListing = async (req,res)=>{
         let {id} = req.params;
-        await Listing.findByIdAndUpdate(id,req.body);
+        let listing = await Listing.findByIdAndUpdate(id,req.body,{
+            new:true, runValidators:true
+        });
+        if(typeof req.file != "undefined"){
+            await cloudinary.uploader.destroy(listing.image.filename);
+            let url = req.file.path;
+            let filename = req.file.filename;
+            listing.image = {url,filename};
+            await listing.save();
+        }
         res.json({
             message:"Listing Updated Successfully !!!"
         });
@@ -45,6 +55,8 @@ module.exports.updateListing = async (req,res)=>{
 
 module.exports.deleteListing = async (req,res) =>{
         let {id} = req.params;
+        let listing = await Listing.findById(id);
+        await cloudinary.uploader.destroy(listing.image.filename);
         await Listing.findByIdAndDelete(id);
         res.json({
             message : "Listing deleted!"
