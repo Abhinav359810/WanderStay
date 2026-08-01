@@ -4,6 +4,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import useBootstrapValidation from "../hooks/useBootstrapValidation";
 import toast from 'react-hot-toast';
+import LoadingOverlay from "../components/LoadingOverlay";
 
 export default function Editform(){
 
@@ -21,6 +22,8 @@ export default function Editform(){
         country:"",
         location:""
      });
+
+     const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
         axios.get(`http://localhost:8080/listings/${id}`)
@@ -48,6 +51,7 @@ export default function Editform(){
         formData.append("price",listing.price);
         formData.append("country",listing.country);
         formData.append("location",listing.location);
+        setLoading(true);
 
         if (listing.image instanceof File) {
            formData.append("image", listing.image);
@@ -60,6 +64,8 @@ export default function Editform(){
         }).catch((err)=>{
             toast.error(err.response.data);
             console.log(err);
+        }).finally(()=>{
+            setLoading(false);
         });
     }
 
@@ -75,6 +81,10 @@ export default function Editform(){
     
     return(
         <>
+        <LoadingOverlay
+            loading={loading}
+            message="Editing your listing ..."        
+        />
         <div className="row mt-3">
             <div className="col-8 offset-2">
         <h3>Edit your Listing </h3>
@@ -117,7 +127,7 @@ export default function Editform(){
             <div className="invalid-feedback">Location should be valid</div>
             </div>
             
-            <button className="btn btn-dark mb-2 edit-btn">Edit</button>
+            <button className="btn btn-dark mb-2 edit-btn" disabled={loading}>Edit</button>
         </form>
         </div>
     </div>

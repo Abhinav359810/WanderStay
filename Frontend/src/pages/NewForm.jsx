@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useBootstrapValidation from "../hooks/useBootstrapValidation";
 import toast from 'react-hot-toast';
+import LoadingOverlay from "../components/LoadingOverlay";
 
 export default function NewForm(){
 
@@ -16,6 +17,8 @@ export default function NewForm(){
         country:"",
         location:""
      });
+
+     const [loading, setLoading] = useState(false);
 
     function handlechange(event){
         const {name,value,files,type} = event.target;
@@ -35,6 +38,8 @@ export default function NewForm(){
         formData.append("country",listing.country);
         formData.append("location",listing.location);
 
+        setLoading(true);
+
         axios.post("http://localhost:8080/listings", formData, { withCredentials: true })
         .then((res)=>{
             navigate('/listings');
@@ -42,6 +47,8 @@ export default function NewForm(){
         }).catch((err)=>{
             toast.error(err.response?.data || 'Create failed');
             console.log(err);
+        }).finally(()=>{
+            setLoading(false);
         });
     }
     //hooks 
@@ -49,6 +56,10 @@ export default function NewForm(){
 
     return(
         <>
+        <LoadingOverlay
+            loading={loading}
+            message="Creating Your Listing..."
+        />
         <div className="row mt-3">
             <div className="col-8 offset-2">
         <h3> Create new Listing </h3>
@@ -91,7 +102,7 @@ export default function NewForm(){
             <div className="invalid-feedback">Location should be valid</div>
             </div>
             
-            <button className="btn btn-dark mb-2 add-btn">Add</button>
+            <button className="btn btn-dark mb-2 add-btn" disabled={loading}>Add</button>
         </form>
         </div>
     </div>
