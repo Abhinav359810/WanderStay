@@ -5,6 +5,7 @@ import useBootstrapValidation from "../hooks/useBootstrapValidation";
 import toast from 'react-hot-toast';
 import { useAuth } from "../context/AuthContext";
 import { Rating } from "react-simple-star-rating";
+import ListingMap from "../components/ListingMap";
 
 export default function Show(){
     const [listing, setListing] = useState({
@@ -14,7 +15,12 @@ export default function Show(){
     price: "",
     location: "",
     country: "",
-    reviews: []
+    geometry: {
+        type: "",
+        coordinates: []
+    },
+    reviews: [],
+     owner: null,
     });
 
     const[review,setReview] = useState({
@@ -125,9 +131,14 @@ export default function Show(){
                     <button className="btn btn-dark" onClick={handleDelete}>Delete</button>
                 </div>}
             </div>
-            </div>      
+            </div>
+
+        {/* Showing the Map */}
+        {listing.geometry?.coordinates?.length === 2 && (
+            <ListingMap listing={listing} />
+        )}
+
         {/* Reviews Section */} 
-        
         <div className="col-8 offset-3 mb-3">
             {/* dynamic render based on user loggined or not  */}
             <hr />
