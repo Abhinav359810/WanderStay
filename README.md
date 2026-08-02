@@ -26,7 +26,6 @@ CampusNest was built using the **MERN stack** with a React frontend and an Expre
 
 ![CampusNest Login](./screenshots/login.png)
 
-> Update the screenshot file names above to match the actual names inside your `screenshots` folder.
 
 ---
 
@@ -289,7 +288,7 @@ CampusNest/
 └── README.md
 ```
 
-> The exact folder names can be adjusted if your repository structure differs slightly.
+
 
 ---
 
