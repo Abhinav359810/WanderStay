@@ -53,3 +53,15 @@ module.exports.isReviewAuthor = async (req, res , next) =>{
     }
     next();
 }
+
+module.exports.normalizeAmenities = (req, res, next) => {
+
+    if (!req.body.amenities) {
+        req.body.amenities = [];
+    }
+    else if (!Array.isArray(req.body.amenities)) {
+        req.body.amenities = [req.body.amenities];
+    }
+
+    next();
+};

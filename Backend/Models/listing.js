@@ -17,6 +17,23 @@ const listingSchema = new Schema({
         price : Number,
         location : String,
         country : String,
+            propertyType: {
+            type: String,
+            enum: ["PG", "Hostel", "Flat"]
+        },
+
+        gender: {
+            type: String,
+            enum: ["Boys", "Girls", "Co-ed"]
+        },
+
+        college: {
+            type: String
+        },
+
+        amenities: [{
+            type: String
+        }],
         geometry: {
             type: {
                 type: String,
@@ -38,6 +55,7 @@ const listingSchema = new Schema({
             type : Schema.Types.ObjectId,
             ref : "User",
         },
+        
 });
 
 //mongoose post middleware to delete all the reviews after deleting a listing
