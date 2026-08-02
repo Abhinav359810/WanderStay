@@ -37,7 +37,7 @@ export default function Navbar(){
         <>
         <nav className="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
         <div className="container-fluid">
-        <Link className="navbar-brand" to="/listings"><i className="fa-solid fa-house"></i></Link>
+        <Link className="navbar-brand" to="/listings"><i className="fa-solid fa-house-chimney"></i><span>CampusNest</span></Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
         <span className="navbar-toggler-icon"></span>
      </button>
