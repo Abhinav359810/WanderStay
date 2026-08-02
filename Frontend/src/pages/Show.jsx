@@ -37,7 +37,7 @@ export default function Show(){
     function fetchListing() {
     axios.get(`http://localhost:8080/listings/${id}`)
         .then((res) => {
-            setListing(res.data);
+            setListing({...res.data});
         })
         .catch((err) => {
             console.log(err);
@@ -131,13 +131,12 @@ export default function Show(){
                     <button className="btn btn-dark" onClick={handleDelete}>Delete</button>
                 </div>}
             </div>
+                {/* Showing the Map */}
+                {listing.geometry?.coordinates?.length === 2 && (
+                    <ListingMap listing={listing} />
+                )}
             </div>
-
-        {/* Showing the Map */}
-        {listing.geometry?.coordinates?.length === 2 && (
-            <ListingMap listing={listing} />
-        )}
-
+    
         {/* Reviews Section */} 
         <div className="col-8 offset-3 mb-3">
             {/* dynamic render based on user loggined or not  */}

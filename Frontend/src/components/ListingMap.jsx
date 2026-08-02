@@ -10,7 +10,7 @@ export default function ListingMap({ listing }) {
         <MapContainer
             center={position}
             zoom={13}
-            style={{ height: "400px", width: "100%" }}
+            style={{ height: "400px", width: "80vh" }}
         >
             <TileLayer
                 attribution="&copy; OpenStreetMap contributors"
