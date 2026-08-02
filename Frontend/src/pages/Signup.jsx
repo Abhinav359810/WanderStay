@@ -38,7 +38,7 @@ export default function Signup(){
 
     return(
         <div className="row mt-3">
-            <h1 className="col-6 offset-3">SignUp on WanderStay</h1>
+            <h1 className="col-6 offset-3">SignUp on CampusNest</h1>
             <div className="col-6 offset-3">
                 <form onSubmit={handlesubmit} noValidate className="needs-validation">
                     {/* Username */}

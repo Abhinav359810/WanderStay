@@ -14,7 +14,7 @@ export default function Footer(){
 
                 {/* Brand Info. */}
                 <div className="f-info-brand">
-                    &copy; WanderStay Private Limited 
+                    &copy; CampusNest Private Limited 
                 </div>
 
                 {/* Links */}
