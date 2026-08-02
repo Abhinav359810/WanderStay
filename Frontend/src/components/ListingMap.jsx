@@ -10,7 +10,7 @@ export default function ListingMap({ listing }) {
         <MapContainer
             center={position}
             zoom={13}
-            style={{ height: "400px", width: "80vh" }}
+            style={{ height: "380px", width: "100%" }}
         >
             <TileLayer
                 attribution="&copy; OpenStreetMap contributors"
@@ -22,7 +22,6 @@ export default function ListingMap({ listing }) {
                     {listing.title}
                 </Popup>
             </Marker>
-
         </MapContainer>
     );
 }
