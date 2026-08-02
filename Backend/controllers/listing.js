@@ -2,9 +2,19 @@ const Listing = require("../Models/listing.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { cloudinary } = require("../cloudConfig");
 
-module.exports.index = async (req,res)=>{
-        const allListings = await Listing.find({});
-        res.json(allListings);
+module.exports.index = async (req, res) => {
+    const { search } = req.query;
+    let filter = {};
+    if (search) {
+        filter = {
+            $or: [
+                { location: { $regex: search, $options: "i" } },
+                { college: { $regex: search, $options: "i" } }
+            ]
+        };
+    }
+    const allListings = await Listing.find(filter);
+    res.json(allListings);
 };
 
 module.exports.showListing = async (req,res)=>{

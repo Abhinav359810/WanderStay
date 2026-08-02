@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import toast from "react-hot-toast";
@@ -6,10 +7,19 @@ import { useAuth } from "../context/AuthContext";
 
 
 export default function Navbar(){
-
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
   
   const {isLoggedIn,setIsLoggedIn} = useAuth();
+
+  function handleSearch(event) {
+    event.preventDefault();
+    if (!search.trim()) {
+        navigate("/listings");
+        return;
+    }
+    navigate(`/listings?search=${encodeURIComponent(search.trim())}`);
+}
 
   function handleNewListing(){
     if(!isLoggedIn){
@@ -48,6 +58,23 @@ export default function Navbar(){
             List Your Property
         </button>
       </div>
+
+      <form className="navbar-search" onSubmit={handleSearch}>
+
+    <i className="fa-solid fa-magnifying-glass"></i>
+
+    <input
+        type="text"
+        placeholder="Search college or location"
+        value={search}
+        onChange={(event) => setSearch(event.target.value)}
+    />
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
 
       {/* Auth control */}
        <div className="navbar-nav ms-auto">
