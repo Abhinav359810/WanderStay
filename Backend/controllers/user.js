@@ -22,7 +22,7 @@ module.exports.signup = async (req, res) => {
                 return next(err);
             }
             res.json({
-            message: "Welcome to WanderStay"
+            message: "Welcome to CampusNest"
         });
         });
     } catch (err) {

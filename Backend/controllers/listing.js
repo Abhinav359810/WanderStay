@@ -32,7 +32,7 @@ module.exports.createListing = async (req, res) => {
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`,
         {
             headers: {
-                "User-Agent": "WanderStay/1.0"
+                "User-Agent": "CampusNest/1.0"
             }
         }
     );
@@ -75,7 +75,7 @@ module.exports.updateListing = async (req, res) => {
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`,
         {
             headers: {
-                "User-Agent": "WanderStay/1.0"
+                "User-Agent": "CampusNest/1.0"
             }
         }
     );

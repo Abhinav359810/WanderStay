@@ -13,7 +13,7 @@ export default function Navbar(){
 
   function handleNewListing(){
     if(!isLoggedIn){
-      toast.error("Please Login First !");
+      toast.error("Please log in to list a property");
       navigate("/login",{
         state:{from : "/listings/new"}
       });
@@ -45,7 +45,7 @@ export default function Navbar(){
         <div className="navbar-nav">
         <Link className="nav-link" to="/listings">Explore</Link>
         <button onClick={handleNewListing} className="nav-link btn btn-link">
-            Create new Listing
+            List Your Property
         </button>
       </div>
 

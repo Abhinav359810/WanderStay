@@ -1,33 +1,116 @@
-/* Styling Footer Component */
 
-.f-info-links {
-    text-decoration: none;
-    color:#222222;
+/* CampusNest Footer */
+.campus-footer {
+    margin-top: 60px;
+    background: #f8fafc;
+    border-top: 1px solid #e5e7eb;
 }
 
-.f-info-links:hover {
-    text-decoration: underline;
-}
-
-.f-info-links,.f-info-socials,
-.f-info-brand{
- width: 100%;
- display:flex;
- align-items: center;
- justify-content: center;
-}
-
-.f-info-socials i{
-    font-size: 1.2rem;
-    margin-right: 1rem;
-}
-
-.f-info{
-    text-align: center;
-    height: 8rem;
-    background-color: #ebebeb;
+/* Main Footer */
+.footer-container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 35px 20px 28px;
     display: flex;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Brand */
+.footer-brand {
+    max-width: 380px;
+}
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: #2563eb;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+}
+
+.footer-brand p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.87rem;
+    line-height: 1.6;
+}
+
+/* Links */
+.footer-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.footer-links a {
+    color: #4b5563;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #2563eb;
+}
+
+/* Socials */
+.footer-socials {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-socials a {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: space-evenly;
+    border: 1px solid #e5e7eb;
+    border-radius: 50%;
+    background: white;
+    color: #4b5563;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.footer-socials a:hover {
+    color: #2563eb;
+    border-color: #bfdbfe;
+    background: #eff6ff;
+}
+
+/* Bottom Copyright */
+.footer-bottom {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: #9ca3af;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-logo {
+        justify-content: center;
+    }
+    .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }

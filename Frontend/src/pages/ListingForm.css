@@ -1,0 +1,254 @@
+/* New Listing Page */
+.listing-form-page {
+    max-width: 850px;
+    margin: 35px auto 70px;
+}
+
+/* Page Header */
+.listing-form-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.form-header-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 13px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 1.2rem;
+}
+
+.listing-form-header h2 {
+    margin: 0 0 4px;
+    color: #1f2937;
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+}
+
+.listing-form-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+
+/* Form */
+.listing-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+
+/* Form Sections */
+.form-section {
+    padding: 25px;
+    border: 1px solid #e5e7eb;
+    border-radius: 15px;
+    background: white;
+}
+
+
+/* Section Heading */
+.form-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 24px;
+}
+
+.form-section-heading > i {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.form-section-heading h4 {
+    margin: 0 0 2px;
+    color: #1f2937;
+    font-size: 1.05rem;
+    font-weight: 650;
+}
+
+.form-section-heading p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.82rem;
+}
+
+
+/* Labels */
+.listing-form .form-label {
+    color: #374151;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+
+/* Inputs */
+.listing-form .form-control,
+.listing-form .form-select {
+    min-height: 45px;
+    border: 1px solid #dfe3e8;
+    border-radius: 9px;
+    font-size: 0.9rem;
+}
+
+.listing-form .form-control:focus,
+.listing-form .form-select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+/* Description */
+.listing-description-input {
+    min-height: 130px;
+    resize: vertical;
+}
+
+
+/* Amenities */
+.amenities-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.amenity-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+.amenity-option:hover {
+    border-color: #bfdbfe;
+    background: #f8fbff;
+}
+.amenity-option input {
+    accent-color: #2563eb;
+}
+
+.amenity-option i {
+    width: 20px;
+    color: #16a34a;
+    text-align: center;
+}
+
+.amenity-option span {
+    color: #374151;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+
+/* Submit Area */
+.form-submit-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-top: 5px;
+}
+.form-submit-area p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.82rem;
+}
+
+.form-submit-area p i {
+    color: #2563eb;
+}
+
+
+/* Publish Button */
+.publish-listing-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 155px;
+    padding: 11px 20px;
+    border: none;
+    border-radius: 9px;
+    background: #2563eb;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+.publish-listing-btn:hover {
+    background: #1d4ed8;
+}
+.publish-listing-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+
+/* Current Property Image - Edit Form */
+.current-property-image {
+    margin-bottom: 20px;
+}
+
+.current-property-image p {
+    margin-bottom: 8px;
+    color: #6b7280;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.current-property-image img {
+    width: 180px;
+    height: 120px;
+    object-fit: cover;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .listing-form-page {
+        margin-top: 25px;
+    }
+    .amenities-selector {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .form-submit-area {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .publish-listing-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .amenities-selector {
+        grid-template-columns: 1fr;
+    }
+    .form-section {
+        padding: 20px;
+    }
+}

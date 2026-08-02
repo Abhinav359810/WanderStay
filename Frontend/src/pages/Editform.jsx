@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import useBootstrapValidation from "../hooks/useBootstrapValidation";
 import toast from 'react-hot-toast';
 import LoadingOverlay from "../components/LoadingOverlay";
+import "./ListingForm.css";
 
 export default function Editform(){
 
@@ -119,189 +120,359 @@ export default function Editform(){
 
     //hooks
     useBootstrapValidation();
-    
-    return(
-        <>
+
+return (
+    <>
         <LoadingOverlay
             loading={loading}
-            message="Editing your listing ..."        
+            message="Updating Your Listing..."
         />
-        <div className="row mt-3">
-            <div className="col-8 offset-2">
-        <h3>Edit your Listing </h3>
-        <form onSubmit={handlesubmit} noValidate className="needs-validation">
-
-            <div className="mb-3">
-            <label htmlFor="title" className="form-label">Title</label>
-            <input id="title" name="title" className="form-control"value={listing.title}onChange={handlechange} type="text" required/> 
-            <div class="valid-feedback"> Title Looks good </div>
+        <div className="listing-form-page">
+            {/* Page Heading */}
+            <div className="listing-form-header">
+                <div className="form-header-icon">
+                    <i className="fa-solid fa-pen-to-square"></i>
+                </div>
+                <div>
+                    <h2>Edit your property</h2>
+                    <p>
+                        Update your property information and keep your listing accurate.
+                    </p>
+                </div>
             </div>
+            <form
+                onSubmit={handlesubmit}
+                noValidate
+                className="needs-validation listing-form"
+                encType="multipart/form-data"
+            >
+                {/* ================= BASIC INFORMATION ================= */}
+                <div className="form-section">
+                    <div className="form-section-heading">
+                        <i className="fa-solid fa-file-lines"></i>
+                        <div>
+                            <h4>Basic information</h4>
+                            <p>Update the main details students see about your property.</p>
+                        </div>
+                    </div>
 
-            <div className="mb-3">
-            <label htmlFor="description" className="form-label">Description</label>
-             <textarea id="description"name="description" className="form-control" value={listing.description}onChange={handlechange} required/> 
-            <div className="invalid-feedback">Give a short description</div>
-            </div>
+                    <div className="mb-3">
+                        <label htmlFor="title" className="form-label">
+                            Property title
+                        </label>
+                        <input
+                            id="title"
+                            name="title"
+                            className="form-control"
+                            value={listing.title}
+                            onChange={handlechange}
+                            type="text"
+                            required
+                        />
+                        <div className="valid-feedback">
+                            Title looks good
+                        </div>
+                    </div>
 
-             <div className="mb-3">
-            <label htmlFor="image" className="form-label">Upload New Image</label>
-             <input id="image"name="image" className="form-control" onChange={handlechange} type="file" accept="image/*" />
-            </div>
+                    <div>
 
-            {/* Property Type */}
-<div className="mb-3">
-    <label htmlFor="propertyType" className="form-label">
-        Property Type
-    </label>
+                        <label htmlFor="description" className="form-label">
+                            Description
+                        </label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            className="form-control listing-description-input"
+                            value={listing.description}
+                            onChange={handlechange}
+                            required
+                        />
 
-    <select
-        id="propertyType"
-        name="propertyType"
-        className="form-select"
-        value={listing.propertyType}
-        onChange={handlechange}
-        required
-    >
-        <option value="">Select Property Type</option>
-        <option value="PG">PG</option>
-        <option value="Hostel">Hostel</option>
-        <option value="Flat">Flat</option>
-    </select>
-</div>
+                        <div className="invalid-feedback">
+                            Please add a short description
+                        </div>
+                    </div>
+                </div>
 
-{/* Gender Type */}
-<div className="mb-3">
-    <label htmlFor="gender" className="form-label">
-        Accommodation For
-    </label>
+                {/* ================= PROPERTY DETAILS ================= */}
+                <div className="form-section">
+                    <div className="form-section-heading">
+                        <i className="fa-solid fa-building"></i>
+                        <div>
+                            <h4>Property details</h4>
+                            <p>Update the accommodation information for students.</p>
+                        </div>
+                    </div>
+                    <div className="row">
+                        {/* Property Type */}
+                        <div className="col-md-6 mb-3">
+                            <label htmlFor="propertyType" className="form-label">
+                                Property type
+                            </label>
+                            <select
+                                id="propertyType"
+                                name="propertyType"
+                                className="form-select"
+                                value={listing.propertyType}
+                                onChange={handlechange}
+                                required
+                            >
+                                <option value="">Select property type</option>
+                                <option value="PG">PG</option>
+                                <option value="Hostel">Hostel</option>
+                                <option value="Flat">Flat</option>
+                            </select>
 
-    <select
-        id="gender"
-        name="gender"
-        className="form-select"
-        value={listing.gender}
-        onChange={handlechange}
-        required
-    >
-        <option value="">Select</option>
-        <option value="Boys">Boys</option>
-        <option value="Girls">Girls</option>
-        <option value="Co-ed">Co-ed</option>
-    </select>
-</div>
-{/* Nearby College */}
-<div className="mb-3">
-    <label htmlFor="college" className="form-label">
-        Nearby College / University
-    </label>
+                            <div className="invalid-feedback">
+                                Please select a property type
+                            </div>
 
-    <input
-        id="college"
-        name="college"
-        type="text"
-        className="form-control"
-        value={listing.college}
-        onChange={handlechange}
-        required
-    />
-</div>
+                        </div>
 
-{/* Amenties */}
-<div className="mb-3">
-    <label className="form-label">
-        Amenities
-    </label>
+                        {/* Gender */}
+                        <div className="col-md-6 mb-3">
 
-    <div>
-        <input
-            type="checkbox"
-            value="WiFi"
-            checked={listing.amenities.includes("WiFi")}
-            onChange={handleAmenityChange}
-        />
+                            <label htmlFor="gender" className="form-label">
+                                Accommodation for
+                            </label>
+                            <select
+                                id="gender"
+                                name="gender"
+                                className="form-select"
+                                value={listing.gender}
+                                onChange={handlechange}
+                                required
+                            >
+                                <option value="">Select accommodation</option>
+                                <option value="Boys">Boys</option>
+                                <option value="Girls">Girls</option>
+                                <option value="Co-ed">Co-ed</option>
+                            </select>
 
-        <label className="ms-2">
-            WiFi
-        </label>
-    </div>
+                            <div className="invalid-feedback">
+                                Please select an option
+                            </div>
+                        </div>
+                    </div>
 
-    <div>
-        <input
-            type="checkbox"
-            value="Food"
-            checked={listing.amenities.includes("Food")}
-            onChange={handleAmenityChange}
-        />
+                    {/* College */}
+                    <div>
+                        <label htmlFor="college" className="form-label">
+                            Nearby college / university
+                        </label>
+                        <input
+                            id="college"
+                            name="college"
+                            type="text"
+                            className="form-control"
+                            value={listing.college}
+                            onChange={handlechange}
+                            required
+                        />
+                        <div className="invalid-feedback">
+                            Please enter a nearby college
+                        </div>
+                    </div>
+                </div>
 
-        <label className="ms-2">
-            Food
-        </label>
-    </div>
+                {/* ================= AMENITIES ================= */}
+                <div className="form-section">
+                    <div className="form-section-heading">
+                        <i className="fa-solid fa-list-check"></i>
+                        <div>
+                            <h4>Amenities</h4>
+                            <p>Select the facilities currently available at this property.</p>
+                        </div>
+                    </div>
 
-    <div>
-        <input
-            type="checkbox"
-            value="Laundry"
-            checked={listing.amenities.includes("Laundry")}
-            onChange={handleAmenityChange}
-        />
+                    <div className="amenities-selector">
+                        <label className="amenity-option">
+                            <input
+                                type="checkbox"
+                                value="WiFi"
+                                checked={listing.amenities.includes("WiFi")}
+                                onChange={handleAmenityChange}
+                            />
+                            <i className="fa-solid fa-wifi"></i>
+                            <span>WiFi</span>
+                        </label>
 
-        <label className="ms-2">
-            Laundry
-        </label>
-    </div>
+                        <label className="amenity-option">
+                            <input
+                                type="checkbox"
+                                value="Food"
+                                checked={listing.amenities.includes("Food")}
+                                onChange={handleAmenityChange}
+                            />
 
-    <div>
-        <input
-            type="checkbox"
-            value="AC"
-            checked={listing.amenities.includes("AC")}
-            onChange={handleAmenityChange}
-        />
+                            <i className="fa-solid fa-utensils"></i>
+                            <span>Food</span>
+                        </label>
 
-        <label className="ms-2">
-            AC
-        </label>
-    </div>
+                        <label className="amenity-option">
+                            <input
+                                type="checkbox"
+                                value="Laundry"
+                                checked={listing.amenities.includes("Laundry")}
+                                onChange={handleAmenityChange}
+                            />
 
-    <div>
-        <input
-            type="checkbox"
-            value="Parking"
-            checked={listing.amenities.includes("Parking")}
-            onChange={handleAmenityChange}
-        />
+                            <i className="fa-solid fa-shirt"></i>
+                            <span>Laundry</span>
+                        </label>
 
-        <label className="ms-2">
-            Parking
-        </label>
-    </div>
-</div>
-            {/* Rent */}
-            <div className="row">
-            <div className="mb-3 col-md-4">
-            <label htmlFor="price" className="form-label">Monthly Rent (₹)</label>
-            <input id="price"name="price" type="number" className="form-control"value={listing.price}onChange={handlechange}  required/>
-            <div className="invalid-feedback">Price should be valid</div>
-            </div>
+                        <label className="amenity-option">
+                            <input
+                                type="checkbox"
+                                value="AC"
+                                checked={listing.amenities.includes("AC")}
+                                onChange={handleAmenityChange}
+                            />
 
-            <div className="mb-3 col-md-8">
-            <label htmlFor="country" className="form-label">Country</label>
-             <input id="country" name="country" className="form-control"  value={listing.country}onChange={handlechange} type="text" required/>
-            <div className="invalid-feedback">Country name should be valid</div>
-            </div>
-           </div>
+                            <i className="fa-solid fa-snowflake"></i>
+                            <span>AC</span>
+                        </label>
 
-            <div className="mb-3">
-            <label htmlFor="location" className="form-label">Location</label>
-            <input id="location" name="location" className="form-control" value={listing.location} onChange={handlechange} type="text" required/>
-            <div className="invalid-feedback">Location should be valid</div>
-            </div>
-            
-            <button className="btn btn-dark mb-2 edit-btn" disabled={loading}>Edit</button>
-        </form>
+                        <label className="amenity-option">
+                            <input
+                                type="checkbox"
+                                value="Parking"
+                                checked={listing.amenities.includes("Parking")}
+                                onChange={handleAmenityChange}
+                            />
+
+                            <i className="fa-solid fa-square-parking"></i>
+                            <span>Parking</span>
+                        </label>
+                    </div>
+                </div>
+
+                {/* ================= LOCATION & RENT ================= */}
+                <div className="form-section">
+                    <div className="form-section-heading">
+                        <i className="fa-solid fa-location-dot"></i>
+                        <div>
+                            <h4>Location & rent</h4>
+                            <p>Keep the property's location and monthly rent up to date.</p>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        {/* Rent */}
+                        <div className="col-md-5 mb-3">
+                            <label htmlFor="price" className="form-label">
+                                Monthly rent (₹)
+                            </label>
+                            <input
+                                id="price"
+                                name="price"
+                                type="number"
+                                className="form-control"
+                                value={listing.price}
+                                onChange={handlechange}
+                                required
+                            />
+                            <div className="invalid-feedback">
+                                Please enter a valid price
+                            </div>
+                        </div>
+
+                        {/* Country */}
+                        <div className="col-md-7 mb-3">
+                            <label htmlFor="country" className="form-label">
+                                Country
+                            </label>
+                            <input
+                                id="country"
+                                name="country"
+                                className="form-control"
+                                value={listing.country}
+                                onChange={handlechange}
+                                type="text"
+                                required
+                            />
+                            <div className="invalid-feedback">
+                                Please enter a valid country
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Location */}
+                    <div>
+                        <label htmlFor="location" className="form-label">
+                            Property location
+                        </label>
+                        <input
+                            id="location"
+                            name="location"
+                            className="form-control"
+                            value={listing.location}
+                            onChange={handlechange}
+                            type="text"
+                            required
+                        />
+                        <div className="invalid-feedback">
+                            Please enter the property location
+                        </div>
+                    </div>
+                </div>
+
+
+                {/* ================= PROPERTY PHOTO ================= */}
+                <div className="form-section">
+                    <div className="form-section-heading">
+                        <i className="fa-solid fa-image"></i>
+                        <div>
+                            <h4>Property photo</h4>
+                            <p>Keep your current photo or upload a new one.</p>
+                        </div>
+                    </div>
+
+                    {/* Current Image */}
+                    {listing.image?.url && !(listing.image instanceof File) && (
+                        <div className="current-property-image">
+                            <p>Current photo</p>
+                            <img
+                                src={listing.image.url}
+                                alt="Current property"
+                            />
+                        </div>
+                    )}
+
+                    <div>
+                        <label htmlFor="image" className="form-label">
+                            Upload new image
+                        </label>
+                        <input
+                            id="image"
+                            name="image"
+                            className="form-control"
+                            onChange={handlechange}
+                            type="file"
+                            accept="image/*"
+                        />
+                        <div className="form-text">
+                            Leave this empty if you want to keep the current image.
+                        </div>
+                    </div>
+                </div>
+
+                {/* ================= SUBMIT ================= */}
+                <div className="form-submit-area">
+                    <p>
+                        <i className="fa-solid fa-circle-info"></i>
+                        Review your changes before updating the property.
+                    </p>
+                    <button
+                        className="publish-listing-btn"
+                        disabled={loading}
+                    >
+                        <i className="fa-solid fa-check"></i>
+                        Save Changes
+                    </button>
+                </div>
+            </form>
         </div>
-    </div>
-        </>
-    );
+    </>
+);
 }
