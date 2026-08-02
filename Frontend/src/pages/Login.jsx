@@ -40,7 +40,7 @@ export default function Login(){
 
     return(
         <div className="row mt-3">
-            <h1 className="col-6 offset-3">Login on CampusNest</h1>
+            <h1 className="col-6 offset-3">Login on</h1>
             <div className="col-6 offset-3">
                 <form onSubmit={handlesubmit} noValidate className="needs-validation">
                     {/* Username */}

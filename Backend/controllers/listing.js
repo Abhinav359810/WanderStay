@@ -3,15 +3,27 @@ const ExpressError = require("../utils/ExpressError.js");
 const { cloudinary } = require("../cloudConfig");
 
 module.exports.index = async (req, res) => {
-    const { search } = req.query;
+    const {
+        search,
+        propertyType,
+        gender,
+        amenity
+    } = req.query;
     let filter = {};
     if (search) {
-        filter = {
-            $or: [
-                { location: { $regex: search, $options: "i" } },
-                { college: { $regex: search, $options: "i" } }
-            ]
-        };
+        filter.$or = [
+            { location: { $regex: search, $options: "i" } },
+            { college: { $regex: search, $options: "i" } }
+        ];
+    }
+    if (propertyType) {
+        filter.propertyType = propertyType;
+    }
+    if (gender) {
+        filter.gender = gender;
+    }
+    if (amenity) {
+        filter.amenities = amenity;
     }
     const allListings = await Listing.find(filter);
     res.json(allListings);

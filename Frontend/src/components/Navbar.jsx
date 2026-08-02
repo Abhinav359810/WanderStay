@@ -48,10 +48,8 @@ export default function Navbar(){
         <nav className="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
         <div className="container-fluid">
         <Link className="navbar-brand" to="/listings"><i className="fa-solid fa-house-chimney"></i><span>CampusNest</span></Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
-        <span className="navbar-toggler-icon"></span>
-     </button>
-    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+    <div className="desktop-nav">
         <div className="navbar-nav">
         <Link className="nav-link" to="/listings">Explore</Link>
         <button onClick={handleNewListing} className="nav-link btn btn-link">
@@ -91,6 +89,37 @@ export default function Navbar(){
     </div>
   </div>
 </nav>
+{/* To handle Mobile navbar we are bringing to bottom for smaller screens  */}
+<div className="mobile-bottom-nav">
+    <Link to="/listings" className="mobile-nav-item">
+        <i className="fa-solid fa-compass"></i>
+        <span>Explore</span>
+    </Link>
+
+    <button
+        onClick={handleNewListing}
+        className="mobile-nav-item"
+    >
+      <i className="fa-solid fa-circle-plus"></i>
+      <span>List Property</span>
+    </button>
+
+    {!isLoggedIn ? (
+        <Link to="/login" className="mobile-nav-item">
+            <i className="fa-regular fa-user"></i>
+            <span>Login</span>
+        </Link>
+    ) : (
+        <button
+            onClick={handlelogout}
+            className="mobile-nav-item"
+        >
+            <i className="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Logout</span>
+        </button>
+    )}
+
+</div>
 </>
     );
 }
