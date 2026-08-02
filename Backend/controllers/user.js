@@ -11,27 +11,27 @@ module.exports.currentUser =  (req, res) => {
     res.status(401).send("Not Logged In");
 };
 
-module.exports.signup = async (req, res) => {
-    try {
-        const { username, email, password } = req.body;
-        const newUser = new User({ username, email });
-        const registeredUser = await User.register(newUser, password);
-        //After signup -> Login 
-        req.login(registeredUser,(err)=>{
-            if(err){
-                return next(err);
-            }
-            res.json({
-            message: "Welcome to CampusNest"
-        });
-        });
-    } catch (err) {
-        // res.status(409).json({
-        //     message : err.message
-        // });
-        throw new ExpressError(409,err.message);
-    }
-};
+    module.exports.signup = async (req, res) => {
+        try {
+            const { username, email, password } = req.body;
+            const newUser = new User({ username, email });
+            const registeredUser = await User.register(newUser, password);
+            //After signup -> Login 
+            req.login(registeredUser,(err)=>{
+                if(err){
+                    return next(err);
+                }
+                res.json({
+                message: "Welcome to CampusNest"
+            });
+            });
+        } catch (err) {
+            // res.status(409).json({
+            //     message : err.message
+            // });
+            throw new ExpressError(409,err.message);
+        }
+    };
 
 module.exports.login = (req,res,next)=>{
         passport.authenticate("local",(err,user,info)=>{
