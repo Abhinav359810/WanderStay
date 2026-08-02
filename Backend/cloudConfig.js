@@ -10,7 +10,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'WanderStay',
+    folder: 'CampusNest',
     allowed_formats: ["png","jpg","jpeg"],
   },
 });

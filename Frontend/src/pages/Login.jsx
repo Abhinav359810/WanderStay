@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useBootstrapValidation from "../hooks/useBootstrapValidation";
 import toast from 'react-hot-toast';
 import { useAuth } from "../context/AuthContext";
+import "./Auth.css";
 
 export default function Login(){
 
@@ -38,40 +39,94 @@ export default function Login(){
 
     useBootstrapValidation();
 
-    return(
-        <div className="row mt-3">
-            <h1 className="col-6 offset-3">Login on</h1>
-            <div className="col-6 offset-3">
-                <form onSubmit={handlesubmit} noValidate className="needs-validation">
-                    {/* Username */}
-                    <div className="mb-3">
-                        <label htmlFor="username" className="form-label">Username</label>
+
+    return (
+    <div className="login-page">
+        <div className="login-card">
+            {/* Header */}
+            <div className="login-header">
+                <div className="login-icon">
+                    <i className="fa-solid fa-house-chimney"></i>
+                </div>
+                <h2>Welcome back</h2>
+                <p>
+                    Log in to continue exploring student homes.
+                </p>
+            </div>
+            {/* Form */}
+            <form
+                onSubmit={handlesubmit}
+                noValidate
+                className="needs-validation"
+            >
+                {/* Username */}
+                <div className="mb-3">
+                    <label
+                        htmlFor="username"
+                        className="form-label login-label"
+                    >
+                        Username
+                    </label>
+                    <div className="login-input-group">
+                        <i className="fa-regular fa-user"></i>
                         <input
-                            name = "username"
-                            id = "username"
+                            name="username"
+                            id="username"
                             type="text"
                             className="form-control"
+                            placeholder="Enter your username"
                             value={user.username}
                             onChange={handlechange}
                             required
                         />
                     </div>
-                    {/* Password */}
-                    <div className="mb-3">
-                         <label htmlFor="password" className="form-label">Password</label>
-                         <input
-                            name = "password"
-                            id = "password"
+                    <div className="invalid-feedback">
+                        Please enter your username
+                    </div>
+                </div>
+
+                {/* Password */}
+                <div className="mb-4">
+                    <label
+                        htmlFor="password"
+                        className="form-label login-label"
+                    >
+                        Password
+                    </label>
+
+                    <div className="login-input-group">
+                        <i className="fa-solid fa-lock"></i>
+                        <input
+                            name="password"
+                            id="password"
                             type="password"
                             className="form-control"
+                            placeholder="Enter your password"
                             value={user.password}
                             onChange={handlechange}
                             required
                         />
                     </div>
-                    <button className="btn btn-success">Login</button>
-                </form>
+
+                    <div className="invalid-feedback">
+                        Please enter your password
+                    </div>
+                </div>
+                {/* Login Button */}
+                <button className="login-btn">
+                    <i className="fa-solid fa-arrow-right-to-bracket"></i>
+                    Log in
+                </button>
+            </form>
+
+            {/* Bottom */}
+            <div className="login-footer">
+                <p>
+                    New to CampusNest?
+                    <Link to="/signup"> Create an account</Link>
+                </p>
             </div>
         </div>
-    )
+    </div>
+);
 };
