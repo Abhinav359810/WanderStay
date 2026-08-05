@@ -23,6 +23,7 @@ function App() {
       {/* creating Routes container */}
       <div className="container">
       <Routes>
+        <Route path="/" element={<Navigate to="/listings" replace />} />
         <Route path = '/listings' element={<Index/>}/>
         <Route path = '/listings/new' element = {<ProtectedRoute><NewForm/></ProtectedRoute>}/>
         <Route path = '/listings/:id' element={<Show/>}/>
