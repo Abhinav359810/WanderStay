@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthContext";
 import { Rating } from "react-simple-star-rating";
 import ListingMap from "../components/ListingMap";
 import "./Show.css";
+import API_URL from "../config/api";
 
 export default function Show(){
     const [listing, setListing] = useState({
@@ -45,7 +46,7 @@ export default function Show(){
 
    //Fetch data from Express API using the ID
     function fetchListing() {
-    axios.get(`http://localhost:8080/listings/${id}`)
+    axios.get(`${API_URL}/listings/${id}`)
         .then((res) => {
             setListing({...res.data});
         })
@@ -61,7 +62,7 @@ export default function Show(){
 
     // Handling Listing Delete 
     function handleDelete(){
-        axios.delete(`http://localhost:8080/listings/${listing._id}`, { withCredentials: true })
+        axios.delete(`${API_URL}/listings/${listing._id}`, { withCredentials: true })
         .then((res)=>{
             navigate('/listings');
             toast.success(res.data.message);
@@ -89,7 +90,7 @@ export default function Show(){
     // Handling Submit Review
     function handleReview(event){
         event.preventDefault();
-        axios.post(`http://localhost:8080/listings/${id}/reviews`,review,{withCredentials:true}).
+        axios.post(`${API_URL}/listings/${id}/reviews`,review,{withCredentials:true}).
         then((res)=>{
             // navigate(`/listings/${id}`);
             toast.success(res.data.message);
@@ -102,7 +103,7 @@ export default function Show(){
 
     //Handling review deleted 
     function handleReviewDelete(reviewId){
-        axios.delete(`http://localhost:8080/listings/${id}/reviews/${reviewId}`, { withCredentials: true }).
+        axios.delete(`${API_URL}/listings/${id}/reviews/${reviewId}`, { withCredentials: true }).
         then((res)=>{
             toast.success(res.data.message);
             // navigate(`/listings/${id}`);

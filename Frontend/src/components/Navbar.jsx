@@ -4,7 +4,7 @@ import "./Navbar.css";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-
+import API_URL from "../config/api";
 
 export default function Navbar(){
   const [search, setSearch] = useState("");
@@ -33,7 +33,7 @@ export default function Navbar(){
   }
 
   function handlelogout(){
-    axios.get("http://localhost:8080/logout",{withCredentials:true}).
+    axios.get(`${API_URL}/logout`,{withCredentials:true}).
     then((res)=>{
       toast.success(res.data.message);
       setIsLoggedIn(false);

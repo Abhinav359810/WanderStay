@@ -73,7 +73,7 @@ export default function NewForm(){
         });
         setLoading(true);
 
-        axios.post("http://localhost:8080/listings", formData, { withCredentials: true })
+        axios.post(`${API_URL}/listings`, formData, { withCredentials: true })
         .then((res)=>{
             navigate('/listings');
             toast.success(res.data.message);

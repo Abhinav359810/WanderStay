@@ -3,7 +3,15 @@ const initdata = require("./data.js");
 const Listing = require("../Models/listing.js");
 const Review = require("../Models/review.js");
 const User = require("../Models/user.js");
-const MONGO_URL = "mongodb://127.0.0.1:27017/CampusNest";
+
+
+// Load environment variables locally
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
+
+
+const MONGO_URL = process.env.ATLASDB_URL;
 
 main()
     .then(() => {

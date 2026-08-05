@@ -9,21 +9,38 @@
     const cors = require("cors");
     const ExpressError = require("./utils/ExpressError.js");
     const session = require("express-session");
+    const {MongoStore} = require("connect-mongo");
     const passport = require("passport");
     const LocalStrategy =  require("passport-local");
     const User = require("./Models/user.js");
+    const PORT = process.env.PORT || 8080;
 
-    const listingRouter = require("./routes/listing.js");
+    const listingRouter = require("./routes/listing.js");   
     const reviewRouter = require("./routes/review.js");
     const userRouter = require("./routes/user.js");
 
-    const MONGO_URL = "mongodb://127.0.0.1:27017/CampusNest";
+    const dbUrl = process.env.ATLASDB_URL;
+
+
+    //creating store
+    const store = MongoStore.create({
+        mongoUrl : dbUrl,
+        crypto:{
+            secret:process.env.SESSION_SECRET,
+        },
+        touchAfter:24*3600,
+    });
+
+    store.on("error",(err)=>{
+        console.log("ERROR in MONGO SESSIONS STORE",err);
+    })
 
     //configuring Express Session
     const sessionOptions = {
-        secret : "23097423DE2JDCNSFDJWEDWEMFWEFOPWMEFOWEFPWOMEFPWOEMF",
+        store,
+        secret : process.env.SESSION_SECRET,
         resave : false,
-        saveUninitialized : true,
+        saveUninitialized : false,
         cookie: {
             expires : Date.now() + 1000 * 60 * 60 * 24 * 3,
             maxAge : 1000 * 60 * 60 * 24 * 3,
@@ -62,7 +79,7 @@
 
     //connecting to database
     async function main(){
-        await mongoose.connect(MONGO_URL);
+        await mongoose.connect(dbUrl);
     }
 
    //404 Error 
@@ -77,6 +94,6 @@
     });
 
     // server is listening
-    app.listen(8080,()=>{
-        console.log("Server is running on 8080 Port");
+    app.listen(PORT,()=>{
+        console.log(`Server is running on ${PORT} Port`);
     });

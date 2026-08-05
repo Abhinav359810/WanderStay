@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link,  useSearchParams} from "react-router-dom";
 import Card from "../components/Card";
 import "./Index.css";
+import API_URL from "../config/api";
 
 // Home page
 export default function Index(){
@@ -16,7 +17,7 @@ export default function Index(){
     const amenity = searchParams.get("amenity") || "";
 
     useEffect(()=>{
-       axios.get("http://localhost:8080/listings",{
+       axios.get(`${API_URL}/listings`,{
        params:{
             search:search,
             propertyType: propertyType,

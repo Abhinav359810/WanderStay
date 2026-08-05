@@ -5,6 +5,7 @@ import useBootstrapValidation from "../hooks/useBootstrapValidation";
 import toast from 'react-hot-toast';
 import { useAuth } from "../context/AuthContext";
 import "./Auth.css";
+import API_URL from "../config/api";
 
 export default function Signup(){
 
@@ -24,7 +25,7 @@ export default function Signup(){
 
     function handlesubmit(event){
         event.preventDefault();
-        axios.post("http://localhost:8080/signup",user,{withCredentials:true}).
+        axios.post(`${API_URL}/signup`,user,{withCredentials:true}).
         then((res)=>{
             toast.success(res.data.message);
             setIsLoggedIn(true);

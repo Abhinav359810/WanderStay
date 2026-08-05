@@ -6,6 +6,7 @@ import useBootstrapValidation from "../hooks/useBootstrapValidation";
 import toast from 'react-hot-toast';
 import LoadingOverlay from "../components/LoadingOverlay";
 import "./ListingForm.css";
+import API_URL from "../config/api";
 
 export default function Editform(){
 
@@ -31,7 +32,7 @@ export default function Editform(){
      const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
-        axios.get(`http://localhost:8080/listings/${id}`)
+        axios.get(`${API_URL}/listings/${id}`)
         .then((res)=>{
             // setListing(res.data);
              const { title, description, image, price, country, location,propertyType,gender,college,amenities } = res.data;
@@ -74,7 +75,7 @@ export default function Editform(){
            formData.append("image", listing.image);
         }
 
-        axios.put(`http://localhost:8080/listings/${id}`,formData,{withCredentials:true})
+        axios.put(`${API_URL}/listings/${id}`,formData,{withCredentials:true})
         .then((res)=>{
             navigate('/listings');
             toast.success(res.data.message);
