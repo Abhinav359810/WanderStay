@@ -44,7 +44,9 @@
         cookie: {
             expires : Date.now() + 1000 * 60 * 60 * 24 * 3,
             maxAge : 1000 * 60 * 60 * 24 * 3,
-            httpOnly : true
+            httpOnly : true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
         },
     };
     app.use(session(sessionOptions));
@@ -56,9 +58,12 @@
     passport.serializeUser(User.serializeUser());
     passport.deserializeUser(User.deserializeUser());
 
-    
+    const allowedOrigins = [
+    "http://localhost:5173",
+    "https://campus-nest-three.vercel.app"
+];
     app.use(cors({
-        origin: "http://localhost:5173",
+        origin: allowedOrigins,
         credentials: true
     }));
     
