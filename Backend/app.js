@@ -5,6 +5,9 @@
     //server : The entry point that starts your Express server
     const express = require("express");
     const app = express();
+    if (process.env.NODE_ENV === "production") {
+    app.set("trust proxy", 1);
+    }
     const mongoose = require("mongoose");
     const cors = require("cors");
     const ExpressError = require("./utils/ExpressError.js");
